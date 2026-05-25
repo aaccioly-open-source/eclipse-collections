@@ -27,6 +27,15 @@ import java.util.stream.Collector;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+import org.eclipse.collections.api.annotation.category.Aggregating;
+import org.eclipse.collections.api.annotation.category.Converting;
+import org.eclipse.collections.api.annotation.category.Counting;
+import org.eclipse.collections.api.annotation.category.Filtering;
+import org.eclipse.collections.api.annotation.category.Finding;
+import org.eclipse.collections.api.annotation.category.Grouping;
+import org.eclipse.collections.api.annotation.category.Iterating;
+import org.eclipse.collections.api.annotation.category.Testing;
+import org.eclipse.collections.api.annotation.category.Transforming;
 import org.eclipse.collections.api.bag.Bag;
 import org.eclipse.collections.api.bag.ImmutableBag;
 import org.eclipse.collections.api.bag.MutableBag;
@@ -195,6 +204,7 @@ public interface RichIterable<T>
     //region [Category: Iterating] 🔄
 
     @Override
+    @Iterating
     default void forEach(Procedure<? super T> procedure)
     {
         this.each(procedure);
@@ -215,6 +225,7 @@ public interface RichIterable<T>
      * @since 6.0
      */
     @SuppressWarnings("UnnecessaryFullyQualifiedName")
+    @Iterating
     void each(Procedure<? super T> procedure);
 
     /**
@@ -230,6 +241,7 @@ public interface RichIterable<T>
      * @see #forEach(Procedure)
      * @since 6.0
      */
+    @Iterating
     RichIterable<T> tap(Procedure<? super T> procedure);
 
     /**
@@ -237,6 +249,7 @@ public interface RichIterable<T>
      *
      * @since 1.0.
      */
+    @Iterating
     LazyIterable<T> asLazy();
 
     //endregion [Category: Iterating] 🔄
@@ -248,6 +261,7 @@ public interface RichIterable<T>
      *
      * @since 1.0
      */
+    @Counting
     int size();
 
     /**
@@ -261,6 +275,7 @@ public interface RichIterable<T>
      *
      * @since 1.0
      */
+    @Counting
     int count(Predicate<? super T> predicate);
 
     /**
@@ -270,6 +285,7 @@ public interface RichIterable<T>
      * return lastNames.<b>countWith</b>(Predicates2.equal(), "Smith");
      * </pre>
      */
+    @Counting
     <P> int countWith(Predicate2<? super T, ? super P> predicate, P parameter);
 
     /**
@@ -278,6 +294,7 @@ public interface RichIterable<T>
      *
      * @since 9.0
      */
+    @Counting
     default <V> Bag<V> countBy(Function<? super T, ? extends V> function)
     {
         return this.countBy(function, Bags.mutable.empty());
@@ -289,6 +306,7 @@ public interface RichIterable<T>
      *
      * @since 9.0
      */
+    @Counting
     default <V, R extends MutableBagIterable<V>> R countBy(Function<? super T, ? extends V> function, R target)
     {
         return this.collect(function, target);
@@ -300,6 +318,7 @@ public interface RichIterable<T>
      *
      * @since 9.0
      */
+    @Counting
     default <V, P> Bag<V> countByWith(Function2<? super T, ? super P, ? extends V> function, P parameter)
     {
         return this.countByWith(function, parameter, Bags.mutable.empty());
@@ -311,6 +330,7 @@ public interface RichIterable<T>
      *
      * @since 9.0
      */
+    @Counting
     default <V, P, R extends MutableBagIterable<V>> R countByWith(Function2<? super T, ? super P, ? extends V> function, P parameter, R target)
     {
         return this.collectWith(function, parameter, target);
@@ -322,6 +342,7 @@ public interface RichIterable<T>
      *
      * @since 10.0.0
      */
+    @Counting
     default <V> Bag<V> countByEach(Function<? super T, ? extends Iterable<V>> function)
     {
         return this.asLazy().flatCollect(function).toBag();
@@ -333,6 +354,7 @@ public interface RichIterable<T>
      *
      * @since 10.0.0
      */
+    @Counting
     default <V, R extends MutableBagIterable<V>> R countByEach(Function<? super T, ? extends Iterable<V>> function, R target)
     {
         return this.flatCollect(function, target);
@@ -347,6 +369,7 @@ public interface RichIterable<T>
      *
      * @since 1.0
      */
+    @Testing
     boolean isEmpty();
 
     /**
@@ -354,6 +377,7 @@ public interface RichIterable<T>
      *
      * @since 1.0
      */
+    @Testing
     default boolean notEmpty()
     {
         return !this.isEmpty();
@@ -364,6 +388,7 @@ public interface RichIterable<T>
      *
      * @since 1.0
      */
+    @Testing
     boolean contains(Object object);
 
     /**
@@ -372,6 +397,7 @@ public interface RichIterable<T>
      *
      * @since 10.3
      */
+    @Testing
     default <V> boolean containsBy(
             Function<? super T, ? extends V> function,
             V value)
@@ -385,6 +411,7 @@ public interface RichIterable<T>
      *
      * @since 11.1
      */
+    @Testing
     default boolean containsAny(Collection<?> source)
     {
         return source instanceof RichIterable ? this.containsAnyIterable(source)
@@ -396,6 +423,7 @@ public interface RichIterable<T>
      *
      * @since 11.1
      */
+    @Testing
     default boolean containsNone(Collection<?> source)
     {
         return source instanceof RichIterable ? this.containsNoneIterable(source)
@@ -407,6 +435,7 @@ public interface RichIterable<T>
      *
      * @since 11.1
      */
+    @Testing
     default boolean containsAnyIterable(Iterable<?> source)
     {
         if (source instanceof RichIterable<?> inside)
@@ -437,6 +466,7 @@ public interface RichIterable<T>
      *
      * @since 11.1
      */
+    @Testing
     default boolean containsNoneIterable(Iterable<?> source)
     {
         if (source instanceof RichIterable<?> inside)
@@ -467,6 +497,7 @@ public interface RichIterable<T>
      *
      * @since 1.0
      */
+    @Testing
     boolean containsAllIterable(Iterable<?> source);
 
     /**
@@ -475,6 +506,7 @@ public interface RichIterable<T>
      * @see Collection#containsAll(Collection)
      * @since 1.0
      */
+    @Testing
     boolean containsAll(Collection<?> source);
 
     /**
@@ -482,6 +514,7 @@ public interface RichIterable<T>
      *
      * @since 1.0
      */
+    @Testing
     boolean containsAllArguments(Object... elements);
 
     /**
@@ -490,6 +523,7 @@ public interface RichIterable<T>
      *
      * @since 1.0
      */
+    @Testing
     boolean anySatisfy(Predicate<? super T> predicate);
 
     /**
@@ -498,6 +532,7 @@ public interface RichIterable<T>
      *
      * @since 5.0
      */
+    @Testing
     <P> boolean anySatisfyWith(Predicate2<? super T, ? super P> predicate, P parameter);
 
     /**
@@ -506,6 +541,7 @@ public interface RichIterable<T>
      *
      * @since 1.0
      */
+    @Testing
     boolean allSatisfy(Predicate<? super T> predicate);
 
     /**
@@ -513,6 +549,7 @@ public interface RichIterable<T>
      *
      * @since 5.0
      */
+    @Testing
     <P> boolean allSatisfyWith(Predicate2<? super T, ? super P> predicate, P parameter);
 
     /**
@@ -521,6 +558,7 @@ public interface RichIterable<T>
      *
      * @since 3.0
      */
+    @Testing
     boolean noneSatisfy(Predicate<? super T> predicate);
 
     /**
@@ -529,6 +567,7 @@ public interface RichIterable<T>
      *
      * @since 5.0
      */
+    @Testing
     <P> boolean noneSatisfyWith(Predicate2<? super T, ? super P> predicate, P parameter);
 
     //endregion [Category: Testing] 🧪
@@ -541,6 +580,7 @@ public interface RichIterable<T>
      * @return an element of an iterable.
      * @since 10.0
      */
+    @Finding
     default T getAny()
     {
         return this.getFirst();
@@ -559,6 +599,7 @@ public interface RichIterable<T>
      * @deprecated in 6.0. Use {@link OrderedIterable#getFirst()} instead.
      */
     @Deprecated
+    @Finding
     T getFirst();
 
     /**
@@ -574,6 +615,7 @@ public interface RichIterable<T>
      * @deprecated in 6.0. Use {@link OrderedIterable#getLast()} instead.
      */
     @Deprecated
+    @Finding
     T getLast();
 
     /**
@@ -583,6 +625,7 @@ public interface RichIterable<T>
      * @throws IllegalStateException if iterable is empty or has multiple elements.
      * @since 8.0
      */
+    @Finding
     default T getOnly()
     {
         if (this.size() == 1)
@@ -605,6 +648,7 @@ public interface RichIterable<T>
      *
      * @since 1.0
      */
+    @Finding
     T detect(Predicate<? super T> predicate);
 
     /**
@@ -619,6 +663,7 @@ public interface RichIterable<T>
      *
      * @since 5.0
      */
+    @Finding
     <P> T detectWith(Predicate2<? super T, ? super P> predicate, P parameter);
 
     /**
@@ -634,6 +679,7 @@ public interface RichIterable<T>
      * @throws NullPointerException if the element selected is null
      * @since 8.0
      */
+    @Finding
     Optional<T> detectOptional(Predicate<? super T> predicate);
 
     /**
@@ -649,6 +695,7 @@ public interface RichIterable<T>
      * @throws NullPointerException if the element selected is null
      * @since 8.0
      */
+    @Finding
     <P> Optional<T> detectWithOptional(Predicate2<? super T, ? super P> predicate, P parameter);
 
     /**
@@ -657,6 +704,7 @@ public interface RichIterable<T>
      *
      * @since 1.0
      */
+    @Finding
     default T detectIfNone(Predicate<? super T> predicate, Function0<? extends T> function)
     {
         T result = this.detect(predicate);
@@ -669,6 +717,7 @@ public interface RichIterable<T>
      *
      * @since 5.0
      */
+    @Finding
     <P> T detectWithIfNone(
             Predicate2<? super T, ? super P> predicate,
             P parameter,
@@ -680,6 +729,7 @@ public interface RichIterable<T>
      * @throws NoSuchElementException if the RichIterable is empty
      * @since 1.0
      */
+    @Finding
     T min(Comparator<? super T> comparator);
 
     /**
@@ -688,6 +738,7 @@ public interface RichIterable<T>
      * @throws NoSuchElementException if the RichIterable is empty
      * @since 1.0
      */
+    @Finding
     T max(Comparator<? super T> comparator);
 
     /**
@@ -697,6 +748,7 @@ public interface RichIterable<T>
      * @throws NullPointerException if the minimum element is null
      * @since 8.2
      */
+    @Finding
     default Optional<T> minOptional(Comparator<? super T> comparator)
     {
         if (this.isEmpty())
@@ -713,6 +765,7 @@ public interface RichIterable<T>
      * @throws NullPointerException if the maximum element is null
      * @since 8.2
      */
+    @Finding
     default Optional<T> maxOptional(Comparator<? super T> comparator)
     {
         if (this.isEmpty())
@@ -729,6 +782,7 @@ public interface RichIterable<T>
      * @throws NoSuchElementException if the RichIterable is empty
      * @since 1.0
      */
+    @Finding
     T min();
 
     /**
@@ -738,6 +792,7 @@ public interface RichIterable<T>
      * @throws NoSuchElementException if the RichIterable is empty
      * @since 1.0
      */
+    @Finding
     T max();
 
     /**
@@ -748,6 +803,7 @@ public interface RichIterable<T>
      * @throws NullPointerException if the minimum element is null
      * @since 8.2
      */
+    @Finding
     default Optional<T> minOptional()
     {
         if (this.isEmpty())
@@ -765,6 +821,7 @@ public interface RichIterable<T>
      * @throws NullPointerException if the maximum element is null
      * @since 8.2
      */
+    @Finding
     default Optional<T> maxOptional()
     {
         if (this.isEmpty())
@@ -780,6 +837,7 @@ public interface RichIterable<T>
      * @throws NoSuchElementException if the RichIterable is empty
      * @since 1.0
      */
+    @Finding
     <V extends Comparable<? super V>> T minBy(Function<? super T, ? extends V> function);
 
     /**
@@ -788,6 +846,7 @@ public interface RichIterable<T>
      * @throws NoSuchElementException if the RichIterable is empty
      * @since 1.0
      */
+    @Finding
     <V extends Comparable<? super V>> T maxBy(Function<? super T, ? extends V> function);
 
     /**
@@ -797,6 +856,7 @@ public interface RichIterable<T>
      * @throws NullPointerException if the minimum element is null
      * @since 8.2
      */
+    @Finding
     default <V extends Comparable<? super V>> Optional<T> minByOptional(Function<? super T, ? extends V> function)
     {
         if (this.isEmpty())
@@ -813,6 +873,7 @@ public interface RichIterable<T>
      * @throws NullPointerException if the maximum element is null
      * @since 8.2
      */
+    @Finding
     default <V extends Comparable<? super V>> Optional<T> maxByOptional(Function<? super T, ? extends V> function)
     {
         if (this.isEmpty())
@@ -838,6 +899,7 @@ public interface RichIterable<T>
      *
      * @since 1.0
      */
+    @Filtering
     RichIterable<T> select(Predicate<? super T> predicate);
 
     /**
@@ -856,6 +918,7 @@ public interface RichIterable<T>
      * @see #select(Predicate)
      * @since 1.0
      */
+    @Filtering
     <R extends Collection<T>> R select(Predicate<? super T> predicate, R target);
 
     /**
@@ -874,6 +937,7 @@ public interface RichIterable<T>
      * @see #select(Predicate)
      * @since 5.0
      */
+    @Filtering
     <P> RichIterable<T> selectWith(Predicate2<? super T, ? super P> predicate, P parameter);
 
     /**
@@ -895,6 +959,7 @@ public interface RichIterable<T>
      * @see #select(Predicate, Collection)
      * @since 1.0
      */
+    @Filtering
     <P, R extends Collection<T>> R selectWith(
             Predicate2<? super T, ? super P> predicate,
             P parameter,
@@ -914,6 +979,7 @@ public interface RichIterable<T>
      * @return a RichIterable that contains elements that cause {@link Predicate#accept(Object)} method to evaluate to false
      * @since 1.0
      */
+    @Filtering
     RichIterable<T> reject(Predicate<? super T> predicate);
 
     /**
@@ -932,6 +998,7 @@ public interface RichIterable<T>
      * @see #select(Predicate)
      * @since 5.0
      */
+    @Filtering
     <P> RichIterable<T> rejectWith(Predicate2<? super T, ? super P> predicate, P parameter);
 
     /**
@@ -948,6 +1015,7 @@ public interface RichIterable<T>
      * @return {@code target}, which contains appended elements as a result of the reject criteria
      * @since 1.0
      */
+    @Filtering
     <R extends Collection<T>> R reject(Predicate<? super T> predicate, R target);
 
     /**
@@ -969,6 +1037,7 @@ public interface RichIterable<T>
      * @see #reject(Predicate, Collection)
      * @since 1.0
      */
+    @Filtering
     <P, R extends Collection<T>> R rejectWith(
             Predicate2<? super T, ? super P> predicate,
             P parameter,
@@ -984,6 +1053,7 @@ public interface RichIterable<T>
      *
      * @since 2.0
      */
+    @Filtering
     <S> RichIterable<S> selectInstancesOf(Class<S> clazz);
 
     /**
@@ -997,6 +1067,7 @@ public interface RichIterable<T>
      *
      * @since 1.0.
      */
+    @Filtering
     PartitionIterable<T> partition(Predicate<? super T> predicate);
 
     /**
@@ -1010,6 +1081,7 @@ public interface RichIterable<T>
      *
      * @since 5.0.
      */
+    @Filtering
     <P> PartitionIterable<T> partitionWith(Predicate2<? super T, ? super P> predicate, P parameter);
 
     //endregion [Category: Filtering] 🚰
@@ -1028,6 +1100,7 @@ public interface RichIterable<T>
      *
      * @since 1.0
      */
+    @Transforming
     <V> RichIterable<V> collect(Function<? super T, ? extends V> function);
 
     /**
@@ -1046,6 +1119,7 @@ public interface RichIterable<T>
      * @see #collect(Function)
      * @since 1.0
      */
+    @Transforming
     <V, R extends Collection<V>> R collect(Function<? super T, ? extends V> function, R target);
 
     /**
@@ -1060,6 +1134,7 @@ public interface RichIterable<T>
      *
      * @since 4.0
      */
+    @Transforming
     BooleanIterable collectBoolean(BooleanFunction<? super T> booleanFunction);
 
     /**
@@ -1077,6 +1152,7 @@ public interface RichIterable<T>
      * @return {@code target}, which contains appended elements as a result of the collect transformation
      * @since 5.0
      */
+    @Transforming
     default <R extends MutableBooleanCollection> R collectBoolean(BooleanFunction<? super T> booleanFunction, R target)
     {
         this.forEach(each -> target.add(booleanFunction.booleanValueOf(each)));
@@ -1095,6 +1171,7 @@ public interface RichIterable<T>
      *
      * @since 4.0
      */
+    @Transforming
     ByteIterable collectByte(ByteFunction<? super T> byteFunction);
 
     /**
@@ -1112,6 +1189,7 @@ public interface RichIterable<T>
      * @return {@code target}, which contains appended elements as a result of the collect transformation
      * @since 5.0
      */
+    @Transforming
     default <R extends MutableByteCollection> R collectByte(ByteFunction<? super T> byteFunction, R target)
     {
         this.forEach(each -> target.add(byteFunction.byteValueOf(each)));
@@ -1130,6 +1208,7 @@ public interface RichIterable<T>
      *
      * @since 4.0
      */
+    @Transforming
     CharIterable collectChar(CharFunction<? super T> charFunction);
 
     /**
@@ -1147,6 +1226,7 @@ public interface RichIterable<T>
      * @return {@code target}, which contains appended elements as a result of the collect transformation
      * @since 5.0
      */
+    @Transforming
     default <R extends MutableCharCollection> R collectChar(CharFunction<? super T> charFunction, R target)
     {
         this.forEach(each -> target.add(charFunction.charValueOf(each)));
@@ -1165,6 +1245,7 @@ public interface RichIterable<T>
      *
      * @since 4.0
      */
+    @Transforming
     DoubleIterable collectDouble(DoubleFunction<? super T> doubleFunction);
 
     /**
@@ -1182,6 +1263,7 @@ public interface RichIterable<T>
      * @return {@code target}, which contains appended elements as a result of the collect transformation
      * @since 5.0
      */
+    @Transforming
     default <R extends MutableDoubleCollection> R collectDouble(DoubleFunction<? super T> doubleFunction, R target)
     {
         this.forEach(each -> target.add(doubleFunction.doubleValueOf(each)));
@@ -1200,6 +1282,7 @@ public interface RichIterable<T>
      *
      * @since 4.0
      */
+    @Transforming
     FloatIterable collectFloat(FloatFunction<? super T> floatFunction);
 
     /**
@@ -1217,6 +1300,7 @@ public interface RichIterable<T>
      * @return {@code target}, which contains appended elements as a result of the collect transformation
      * @since 5.0
      */
+    @Transforming
     default <R extends MutableFloatCollection> R collectFloat(FloatFunction<? super T> floatFunction, R target)
     {
         this.forEach(each -> target.add(floatFunction.floatValueOf(each)));
@@ -1235,6 +1319,7 @@ public interface RichIterable<T>
      *
      * @since 4.0
      */
+    @Transforming
     IntIterable collectInt(IntFunction<? super T> intFunction);
 
     /**
@@ -1252,6 +1337,7 @@ public interface RichIterable<T>
      * @return {@code target}, which contains appended elements as a result of the collect transformation
      * @since 5.0
      */
+    @Transforming
     default <R extends MutableIntCollection> R collectInt(IntFunction<? super T> intFunction, R target)
     {
         this.forEach(each -> target.add(intFunction.intValueOf(each)));
@@ -1270,6 +1356,7 @@ public interface RichIterable<T>
      *
      * @since 4.0
      */
+    @Transforming
     LongIterable collectLong(LongFunction<? super T> longFunction);
 
     /**
@@ -1287,6 +1374,7 @@ public interface RichIterable<T>
      * @return {@code target}, which contains appended elements as a result of the collect transformation
      * @since 5.0
      */
+    @Transforming
     default <R extends MutableLongCollection> R collectLong(LongFunction<? super T> longFunction, R target)
     {
         this.forEach(each -> target.add(longFunction.longValueOf(each)));
@@ -1305,6 +1393,7 @@ public interface RichIterable<T>
      *
      * @since 4.0
      */
+    @Transforming
     ShortIterable collectShort(ShortFunction<? super T> shortFunction);
 
     /**
@@ -1322,6 +1411,7 @@ public interface RichIterable<T>
      * @return {@code target}, which contains appended elements as a result of the collect transformation
      * @since 5.0
      */
+    @Transforming
     default <R extends MutableShortCollection> R collectShort(ShortFunction<? super T> shortFunction, R target)
     {
         this.forEach(each -> target.add(shortFunction.shortValueOf(each)));
@@ -1343,6 +1433,7 @@ public interface RichIterable<T>
      * @see #collect(Function)
      * @since 5.0
      */
+    @Transforming
     <P, V> RichIterable<V> collectWith(Function2<? super T, ? super P, ? extends V> function, P parameter);
 
     /**
@@ -1360,6 +1451,7 @@ public interface RichIterable<T>
      * @return {@code targetCollection}, which contains appended elements as a result of the collect transformation
      * @since 1.0
      */
+    @Transforming
     <P, V, R extends Collection<V>> R collectWith(
             Function2<? super T, ? super P, ? extends V> function,
             P parameter,
@@ -1382,6 +1474,7 @@ public interface RichIterable<T>
      *
      * @since 1.0
      */
+    @Transforming
     <V> RichIterable<V> collectIf(Predicate<? super T> predicate, Function<? super T, ? extends V> function);
 
     /**
@@ -1394,6 +1487,7 @@ public interface RichIterable<T>
      * @see #collectIf(Predicate, Function)
      * @since 1.0
      */
+    @Transforming
     <V, R extends Collection<V>> R collectIf(
             Predicate<? super T> predicate,
             Function<? super T, ? extends V> function,
@@ -1422,6 +1516,7 @@ public interface RichIterable<T>
      * @return a new flattened collection produced by applying the given {@code function}
      * @since 1.0
      */
+    @Transforming
     <V> RichIterable<V> flatCollect(Function<? super T, ? extends Iterable<V>> function);
 
     /**
@@ -1429,6 +1524,7 @@ public interface RichIterable<T>
      *
      * @since 9.2
      */
+    @Transforming
     default <P, V> RichIterable<V> flatCollectWith(Function2<? super T, ? super P, ? extends Iterable<V>> function, P parameter)
     {
         return this.flatCollect(each -> function.apply(each, parameter));
@@ -1442,6 +1538,7 @@ public interface RichIterable<T>
      * @return {@code target}, which will contain a flattened collection of results produced by applying the given {@code function}
      * @see #flatCollect(Function)
      */
+    @Transforming
     <V, R extends Collection<V>> R flatCollect(Function<? super T, ? extends Iterable<V>> function, R target);
 
     /**
@@ -1449,6 +1546,7 @@ public interface RichIterable<T>
      *
      * @since 9.2
      */
+    @Transforming
     default <P, V, R extends Collection<V>> R flatCollectWith(Function2<? super T, ? super P, ? extends Iterable<V>> function, P parameter, R target)
     {
         return this.flatCollect(each -> function.apply(each, parameter), target);
@@ -1462,6 +1560,7 @@ public interface RichIterable<T>
      * @return {@code target}, which will contain a flattened collection of results produced by applying the given {@code function}
      * @see #flatCollect(Function)
      */
+    @Transforming
     default <R extends MutableByteCollection> R flatCollectByte(Function<? super T, ? extends ByteIterable> function, R target)
     {
         this.forEach(each -> target.addAll(function.valueOf(each)));
@@ -1476,6 +1575,7 @@ public interface RichIterable<T>
      * @return {@code target}, which will contain a flattened collection of results produced by applying the given {@code function}
      * @see #flatCollect(Function)
      */
+    @Transforming
     default <R extends MutableCharCollection> R flatCollectChar(Function<? super T, ? extends CharIterable> function, R target)
     {
         this.forEach(each -> target.addAll(function.valueOf(each)));
@@ -1490,6 +1590,7 @@ public interface RichIterable<T>
      * @return {@code target}, which will contain a flattened collection of results produced by applying the given {@code function}
      * @see #flatCollect(Function)
      */
+    @Transforming
     default <R extends MutableIntCollection> R flatCollectInt(Function<? super T, ? extends IntIterable> function, R target)
     {
         this.forEach(each -> target.addAll(function.valueOf(each)));
@@ -1504,6 +1605,7 @@ public interface RichIterable<T>
      * @return {@code target}, which will contain a flattened collection of results produced by applying the given {@code function}
      * @see #flatCollect(Function)
      */
+    @Transforming
     default <R extends MutableShortCollection> R flatCollectShort(Function<? super T, ? extends ShortIterable> function, R target)
     {
         this.forEach(each -> target.addAll(function.valueOf(each)));
@@ -1518,6 +1620,7 @@ public interface RichIterable<T>
      * @return {@code target}, which will contain a flattened collection of results produced by applying the given {@code function}
      * @see #flatCollect(Function)
      */
+    @Transforming
     default <R extends MutableDoubleCollection> R flatCollectDouble(Function<? super T, ? extends DoubleIterable> function, R target)
     {
         this.forEach(each -> target.addAll(function.valueOf(each)));
@@ -1532,6 +1635,7 @@ public interface RichIterable<T>
      * @return {@code target}, which will contain a flattened collection of results produced by applying the given {@code function}
      * @see #flatCollect(Function)
      */
+    @Transforming
     default <R extends MutableFloatCollection> R flatCollectFloat(Function<? super T, ? extends FloatIterable> function, R target)
     {
         this.forEach(each -> target.addAll(function.valueOf(each)));
@@ -1546,6 +1650,7 @@ public interface RichIterable<T>
      * @return {@code target}, which will contain a flattened collection of results produced by applying the given {@code function}
      * @see #flatCollect(Function)
      */
+    @Transforming
     default <R extends MutableLongCollection> R flatCollectLong(Function<? super T, ? extends LongIterable> function, R target)
     {
         this.forEach(each -> target.addAll(function.valueOf(each)));
@@ -1560,6 +1665,7 @@ public interface RichIterable<T>
      * @return {@code target}, which will contain a flattened collection of results produced by applying the given {@code function}
      * @see #flatCollect(Function)
      */
+    @Transforming
     default <R extends MutableBooleanCollection> R flatCollectBoolean(Function<? super T, ? extends BooleanIterable> function, R target)
     {
         this.forEach(each -> target.addAll(function.valueOf(each)));
@@ -1580,6 +1686,7 @@ public interface RichIterable<T>
      * @deprecated in 6.0. Use {@link OrderedIterable#zip(Iterable)} instead.
      */
     @Deprecated
+    @Transforming
     <S> RichIterable<Pair<T, S>> zip(Iterable<S> that);
 
     /**
@@ -1589,6 +1696,7 @@ public interface RichIterable<T>
      * @deprecated in 6.0. Use {@link OrderedIterable#zip(Iterable, Collection)} instead;
      */
     @Deprecated
+    @Transforming
     <S, R extends Collection<Pair<T, S>>> R zip(Iterable<S> that, R target);
 
     /**
@@ -1601,6 +1709,7 @@ public interface RichIterable<T>
      * @deprecated in 6.0. Use {@link OrderedIterable#zipWithIndex()} instead.
      */
     @Deprecated
+    @Transforming
     RichIterable<Pair<T, Integer>> zipWithIndex();
 
     /**
@@ -1610,6 +1719,7 @@ public interface RichIterable<T>
      * @deprecated in 6.0. Use {@link OrderedIterable#zipWithIndex(Collection)} instead.
      */
     @Deprecated
+    @Transforming
     <R extends Collection<Pair<T, Integer>>> R zipWithIndex(R target);
 
     //endregion [Category: Transforming] 🦋
@@ -1629,6 +1739,7 @@ public interface RichIterable<T>
      *
      * @since 1.0
      */
+    @Grouping
     <V> Multimap<V, T> groupBy(Function<? super T, ? extends V> function);
 
     /**
@@ -1643,6 +1754,7 @@ public interface RichIterable<T>
      *
      * @since 1.0
      */
+    @Grouping
     <V, R extends MutableMultimap<V, T>> R groupBy(Function<? super T, ? extends V> function, R target);
 
     /**
@@ -1651,6 +1763,7 @@ public interface RichIterable<T>
      *
      * @since 1.0
      */
+    @Grouping
     <V> Multimap<V, T> groupByEach(Function<? super T, ? extends Iterable<V>> function);
 
     /**
@@ -1659,6 +1772,7 @@ public interface RichIterable<T>
      *
      * @since 1.0
      */
+    @Grouping
     <V, R extends MutableMultimap<V, T>> R groupByEach(
             Function<? super T, ? extends Iterable<V>> function,
             R target);
@@ -1672,6 +1786,7 @@ public interface RichIterable<T>
      * @see #groupBy(Function)
      * @since 5.0
      */
+    @Grouping
     <V> MapIterable<V, T> groupByUniqueKey(Function<? super T, ? extends V> function);
 
     /**
@@ -1682,6 +1797,7 @@ public interface RichIterable<T>
      * @see #groupByUniqueKey(Function)
      * @since 6.0
      */
+    @Grouping
     <V, R extends MutableMapIterable<V, T>> R groupByUniqueKey(
             Function<? super T, ? extends V> function,
             R target);
@@ -1694,6 +1810,7 @@ public interface RichIterable<T>
      * truncated if the elements don't divide evenly.
      * @since 1.0
      */
+    @Grouping
     RichIterable<RichIterable<T>> chunk(int size);
 
     /**
@@ -1701,15 +1818,13 @@ public interface RichIterable<T>
      *
      * @param groupByFunction a {@link Function} to use as the groupBy transformation function
      * @param collectFunction a {@link Function} to use as the collect transformation function
-     *
      * @return The {@code target} collection where the key is the transformed result from applying the groupBy function
      * and the value is the transformed result from applying the collect function.
-     *
      * @see #groupBy(Function)
      * @see Multimap#collectValues(Function)
-     *
      * @since 10.1.0
      */
+    @Grouping
     default <K, V, R extends MutableMultimap<K, V>> R groupByAndCollect(
             Function<? super T, ? extends K> groupByFunction,
             Function<? super T, ? extends V> collectFunction,
@@ -1730,6 +1845,7 @@ public interface RichIterable<T>
      *
      * @since 1.0
      */
+    @Aggregating
     <IV> IV injectInto(IV injectedValue, Function2<? super IV, ? super T, ? extends IV> function);
 
     /**
@@ -1741,6 +1857,7 @@ public interface RichIterable<T>
      * @deprecated since 11.1 - use injectIntoInt instead
      */
     @Deprecated
+    @Aggregating
     int injectInto(int injectedValue, IntObjectToIntFunction<? super T> function);
 
     /**
@@ -1750,6 +1867,7 @@ public interface RichIterable<T>
      *
      * @since 11.1
      */
+    @Aggregating
     default int injectIntoInt(int injectedValue, IntObjectToIntFunction<? super T> function)
     {
         return this.injectInto(injectedValue, function);
@@ -1764,6 +1882,7 @@ public interface RichIterable<T>
      * @deprecated since 11.1 - use injectIntoLong instead
      */
     @Deprecated
+    @Aggregating
     long injectInto(long injectedValue, LongObjectToLongFunction<? super T> function);
 
     /**
@@ -1773,6 +1892,7 @@ public interface RichIterable<T>
      *
      * @since 11.1
      */
+    @Aggregating
     default long injectIntoLong(long injectedValue, LongObjectToLongFunction<? super T> function)
     {
         return this.injectInto(injectedValue, function);
@@ -1787,6 +1907,7 @@ public interface RichIterable<T>
      * @deprecated since 11.1 - use injectIntoFloat instead
      */
     @Deprecated
+    @Aggregating
     float injectInto(float injectedValue, FloatObjectToFloatFunction<? super T> function);
 
     /**
@@ -1796,6 +1917,7 @@ public interface RichIterable<T>
      *
      * @since 11.1
      */
+    @Aggregating
     default float injectIntoFloat(float injectedValue, FloatObjectToFloatFunction<? super T> function)
     {
         return this.injectInto(injectedValue, function);
@@ -1810,6 +1932,7 @@ public interface RichIterable<T>
      * @deprecated since 11.1 - use injectIntoDouble instead
      */
     @Deprecated
+    @Aggregating
     double injectInto(double injectedValue, DoubleObjectToDoubleFunction<? super T> function);
 
     /**
@@ -1819,6 +1942,7 @@ public interface RichIterable<T>
      *
      * @since 11.1
      */
+    @Aggregating
     default double injectIntoDouble(double injectedValue, DoubleObjectToDoubleFunction<? super T> function)
     {
         return this.injectInto(injectedValue, function);
@@ -1830,6 +1954,7 @@ public interface RichIterable<T>
      *
      * @since 2.0
      */
+    @Aggregating
     long sumOfInt(IntFunction<? super T> function);
 
     /**
@@ -1838,6 +1963,7 @@ public interface RichIterable<T>
      *
      * @since 2.0
      */
+    @Aggregating
     double sumOfFloat(FloatFunction<? super T> function);
 
     /**
@@ -1846,6 +1972,7 @@ public interface RichIterable<T>
      *
      * @since 2.0
      */
+    @Aggregating
     long sumOfLong(LongFunction<? super T> function);
 
     /**
@@ -1854,6 +1981,7 @@ public interface RichIterable<T>
      *
      * @since 2.0
      */
+    @Aggregating
     double sumOfDouble(DoubleFunction<? super T> function);
 
     /**
@@ -1867,6 +1995,7 @@ public interface RichIterable<T>
      *
      * @since 8.0
      */
+    @Aggregating
     default IntSummaryStatistics summarizeInt(IntFunction<? super T> function)
     {
         IntSummaryStatistics stats = new IntSummaryStatistics();
@@ -1885,6 +2014,7 @@ public interface RichIterable<T>
      *
      * @since 8.0
      */
+    @Aggregating
     default DoubleSummaryStatistics summarizeFloat(FloatFunction<? super T> function)
     {
         DoubleSummaryStatistics stats = new DoubleSummaryStatistics();
@@ -1903,6 +2033,7 @@ public interface RichIterable<T>
      *
      * @since 8.0
      */
+    @Aggregating
     default LongSummaryStatistics summarizeLong(LongFunction<? super T> function)
     {
         LongSummaryStatistics stats = new LongSummaryStatistics();
@@ -1921,6 +2052,7 @@ public interface RichIterable<T>
      *
      * @since 8.0
      */
+    @Aggregating
     default DoubleSummaryStatistics summarizeDouble(DoubleFunction<? super T> function)
     {
         DoubleSummaryStatistics stats = new DoubleSummaryStatistics();
@@ -1938,6 +2070,7 @@ public interface RichIterable<T>
      *
      * @since 8.0
      */
+    @Aggregating
     default <R, A> R reduceInPlace(Collector<? super T, A, R> collector)
     {
         A mutableResult = collector.supplier().get();
@@ -1952,6 +2085,7 @@ public interface RichIterable<T>
      *
      * @since 8.0
      */
+    @Aggregating
     default <R> R reduceInPlace(Supplier<R> supplier, BiConsumer<R, ? super T> accumulator)
     {
         R result = supplier.get();
@@ -1964,6 +2098,7 @@ public interface RichIterable<T>
      *
      * @since 8.0
      */
+    @Aggregating
     default Optional<T> reduce(BinaryOperator<T> accumulator)
     {
         boolean[] seenOne = new boolean[1];
@@ -1988,6 +2123,7 @@ public interface RichIterable<T>
      *
      * @since 6.0
      */
+    @Aggregating
     <V> ObjectLongMap<V> sumByInt(Function<? super T, ? extends V> groupBy, IntFunction<? super T> function);
 
     /**
@@ -1995,6 +2131,7 @@ public interface RichIterable<T>
      *
      * @since 6.0
      */
+    @Aggregating
     <V> ObjectDoubleMap<V> sumByFloat(Function<? super T, ? extends V> groupBy, FloatFunction<? super T> function);
 
     /**
@@ -2002,6 +2139,7 @@ public interface RichIterable<T>
      *
      * @since 6.0
      */
+    @Aggregating
     <V> ObjectLongMap<V> sumByLong(Function<? super T, ? extends V> groupBy, LongFunction<? super T> function);
 
     /**
@@ -2009,6 +2147,7 @@ public interface RichIterable<T>
      *
      * @since 6.0
      */
+    @Aggregating
     <V> ObjectDoubleMap<V> sumByDouble(Function<? super T, ? extends V> groupBy, DoubleFunction<? super T> function);
 
     /**
@@ -2018,6 +2157,7 @@ public interface RichIterable<T>
      *
      * @since 3.0
      */
+    @Aggregating
     default <K, V> MapIterable<K, V> aggregateInPlaceBy(
             Function<? super T, ? extends K> groupBy,
             Function0<? extends V> zeroValueFactory,
@@ -2040,6 +2180,7 @@ public interface RichIterable<T>
      *
      * @since 3.0
      */
+    @Aggregating
     default <K, V> MapIterable<K, V> aggregateBy(
             Function<? super T, ? extends K> groupBy,
             Function0<? extends V> zeroValueFactory,
@@ -2059,6 +2200,7 @@ public interface RichIterable<T>
      *
      * @since 10.3
      */
+    @Aggregating
     default <K, V, R extends MutableMapIterable<K, V>> R aggregateBy(
             Function<? super T, ? extends K> groupBy,
             Function0<? extends V> zeroValueFactory,
@@ -2080,6 +2222,7 @@ public interface RichIterable<T>
      * @since 12.0
      *
      */
+    @Aggregating
     default <K> MapIterable<K, T> reduceBy(
             Function<? super T, ? extends K> groupBy,
             Function2<? super T, ? super T, ? extends T> reduceFunction)
@@ -2096,6 +2239,7 @@ public interface RichIterable<T>
      *
      * @since 12.0
      */
+    @Aggregating
     default <K, R extends MutableMapIterable<K, T>> R reduceBy(
             Function<? super T, ? extends K> groupBy,
             Function2<? super T, ? super T, ? extends T> reduceFunction,
@@ -2118,6 +2262,7 @@ public interface RichIterable<T>
      *
      * @since 8.0
      */
+    @Converting
     <R extends Collection<T>> R into(R target);
 
     /**
@@ -2125,6 +2270,7 @@ public interface RichIterable<T>
      *
      * @since 1.0
      */
+    @Converting
     MutableList<T> toList();
 
     /**
@@ -2132,6 +2278,7 @@ public interface RichIterable<T>
      *
      * @since 1.0
      */
+    @Converting
     default MutableList<T> toSortedList()
     {
         return this.toList().sortThis();
@@ -2142,6 +2289,7 @@ public interface RichIterable<T>
      *
      * @since 1.0
      */
+    @Converting
     default MutableList<T> toSortedList(Comparator<? super T> comparator)
     {
         return this.toList().sortThis(comparator);
@@ -2153,6 +2301,7 @@ public interface RichIterable<T>
      *
      * @since 1.0
      */
+    @Converting
     default <V extends Comparable<? super V>> MutableList<T> toSortedListBy(Function<? super T, ? extends V> function)
     {
         return this.toSortedList(SerializableComparators.byFunction(function));
@@ -2163,6 +2312,7 @@ public interface RichIterable<T>
      *
      * @since 1.0
      */
+    @Converting
     MutableSet<T> toSet();
 
     /**
@@ -2171,6 +2321,7 @@ public interface RichIterable<T>
      *
      * @since 1.0
      */
+    @Converting
     MutableSortedSet<T> toSortedSet();
 
     /**
@@ -2178,6 +2329,7 @@ public interface RichIterable<T>
      *
      * @since 1.0
      */
+    @Converting
     MutableSortedSet<T> toSortedSet(Comparator<? super T> comparator);
 
     /**
@@ -2186,6 +2338,7 @@ public interface RichIterable<T>
      *
      * @since 1.0
      */
+    @Converting
     default <V extends Comparable<? super V>> MutableSortedSet<T> toSortedSetBy(Function<? super T, ? extends V> function)
     {
         return this.toSortedSet(SerializableComparators.byFunction(function));
@@ -2196,6 +2349,7 @@ public interface RichIterable<T>
      *
      * @since 1.0
      */
+    @Converting
     MutableBag<T> toBag();
 
     /**
@@ -2204,6 +2358,7 @@ public interface RichIterable<T>
      *
      * @since 6.0
      */
+    @Converting
     MutableSortedBag<T> toSortedBag();
 
     /**
@@ -2211,6 +2366,7 @@ public interface RichIterable<T>
      *
      * @since 6.0
      */
+    @Converting
     MutableSortedBag<T> toSortedBag(Comparator<? super T> comparator);
 
     /**
@@ -2219,6 +2375,7 @@ public interface RichIterable<T>
      *
      * @since 6.0
      */
+    @Converting
     default <V extends Comparable<? super V>> MutableSortedBag<T> toSortedBagBy(Function<? super T, ? extends V> function)
     {
         return this.toSortedBag(SerializableComparators.byFunction(function));
@@ -2229,6 +2386,7 @@ public interface RichIterable<T>
      *
      * @since 1.0
      */
+    @Converting
     <NK, NV> MutableMap<NK, NV> toMap(
             Function<? super T, ? extends NK> keyFunction,
             Function<? super T, ? extends NV> valueFunction);
@@ -2239,6 +2397,7 @@ public interface RichIterable<T>
      *
      * @since 10.0
      */
+    @Converting
     default <NK, NV, R extends Map<NK, NV>> R toMap(
             Function<? super T, ? extends NK> keyFunction,
             Function<? super T, ? extends NV> valueFunction,
@@ -2254,6 +2413,7 @@ public interface RichIterable<T>
      *
      * @since 1.0
      */
+    @Converting
     <NK, NV> MutableSortedMap<NK, NV> toSortedMap(
             Function<? super T, ? extends NK> keyFunction,
             Function<? super T, ? extends NV> valueFunction);
@@ -2264,6 +2424,7 @@ public interface RichIterable<T>
      *
      * @since 1.0
      */
+    @Converting
     <NK, NV> MutableSortedMap<NK, NV> toSortedMap(
             Comparator<? super NK> comparator,
             Function<? super T, ? extends NK> keyFunction,
@@ -2273,6 +2434,7 @@ public interface RichIterable<T>
      * Converts the collection to a MutableSortedMap implementation using the specified key and value functions
      * and sorts it based on the natural order of the attribute returned by {@code sortBy} function.
      */
+    @Converting
     default <KK extends Comparable<? super KK>, NK, NV> MutableSortedMap<NK, NV> toSortedMapBy(
             Function<? super NK, KK> sortBy,
             Function<? super T, ? extends NK> keyFunction,
@@ -2286,6 +2448,7 @@ public interface RichIterable<T>
      *
      * @since 10.0
      */
+    @Converting
     <NK, NV> MutableBiMap<NK, NV> toBiMap(
             Function<? super T, ? extends NK> keyFunction,
             Function<? super T, ? extends NV> valueFunction);
@@ -2295,6 +2458,7 @@ public interface RichIterable<T>
      *
      * @since 11.0
      */
+    @Converting
     default ImmutableList<T> toImmutableList()
     {
         return Lists.immutable.withAll(this);
@@ -2305,6 +2469,7 @@ public interface RichIterable<T>
      *
      * @since 11.0
      */
+    @Converting
     default ImmutableSet<T> toImmutableSet()
     {
         return Sets.immutable.withAll(this);
@@ -2315,6 +2480,7 @@ public interface RichIterable<T>
      *
      * @since 11.0
      */
+    @Converting
     default ImmutableBag<T> toImmutableBag()
     {
         return Bags.immutable.withAll(this);
@@ -2325,6 +2491,7 @@ public interface RichIterable<T>
      *
      * @since 11.0
      */
+    @Converting
     default ImmutableList<T> toImmutableSortedList()
     {
         return Lists.immutable.withAllSorted(this);
@@ -2335,6 +2502,7 @@ public interface RichIterable<T>
      *
      * @since 11.0
      */
+    @Converting
     default ImmutableList<T> toImmutableSortedList(Comparator<? super T> comparator)
     {
         return Lists.immutable.withAllSorted(comparator, this);
@@ -2346,6 +2514,7 @@ public interface RichIterable<T>
      *
      * @since 11.0
      */
+    @Converting
     default <V extends Comparable<? super V>> ImmutableList<T> toImmutableSortedListBy(Function<? super T, ? extends V> function)
     {
         return this.toImmutableSortedList(Comparator.comparing(function));
@@ -2356,6 +2525,7 @@ public interface RichIterable<T>
      *
      * @since 11.0
      */
+    @Converting
     default ImmutableSortedSet<T> toImmutableSortedSet()
     {
         return SortedSets.immutable.withAll(this);
@@ -2366,6 +2536,7 @@ public interface RichIterable<T>
      *
      * @since 11.0
      */
+    @Converting
     default ImmutableSortedSet<T> toImmutableSortedSet(Comparator<? super T> comparator)
     {
         return SortedSets.immutable.withAll(comparator, this);
@@ -2377,6 +2548,7 @@ public interface RichIterable<T>
      *
      * @since 11.0
      */
+    @Converting
     default <V extends Comparable<? super V>> ImmutableSortedSet<T> toImmutableSortedSetBy(Function<? super T, ? extends V> function)
     {
         return this.toImmutableSortedSet(Comparator.comparing(function));
@@ -2387,6 +2559,7 @@ public interface RichIterable<T>
      *
      * @since 11.0
      */
+    @Converting
     default ImmutableSortedBag<T> toImmutableSortedBag()
     {
         return SortedBags.immutable.withAll(this);
@@ -2397,6 +2570,7 @@ public interface RichIterable<T>
      *
      * @since 11.0
      */
+    @Converting
     default ImmutableSortedBag<T> toImmutableSortedBag(Comparator<? super T> comparator)
     {
         return SortedBags.immutable.withAll(comparator, this);
@@ -2408,6 +2582,7 @@ public interface RichIterable<T>
      *
      * @since 11.0
      */
+    @Converting
     default <V extends Comparable<? super V>> ImmutableSortedBag<T> toImmutableSortedBagBy(Function<? super T, ? extends V> function)
     {
         return this.toImmutableSortedBag(Comparator.comparing(function));
@@ -2418,6 +2593,7 @@ public interface RichIterable<T>
      *
      * @since 11.0
      */
+    @Converting
     default <NK, NV> ImmutableMap<NK, NV> toImmutableMap(
             Function<? super T, ? extends NK> keyFunction,
             Function<? super T, ? extends NV> valueFunction)
@@ -2430,6 +2606,7 @@ public interface RichIterable<T>
      *
      * @since 11.0
      */
+    @Converting
     default <NK, NV> ImmutableBiMap<NK, NV> toImmutableBiMap(
             Function<? super T, ? extends NK> keyFunction,
             Function<? super T, ? extends NV> valueFunction)
@@ -2443,6 +2620,7 @@ public interface RichIterable<T>
      * @see Collection#toArray()
      * @since 1.0
      */
+    @Converting
     default Object[] toArray()
     {
         Object[] result = new Object[this.size()];
@@ -2457,6 +2635,7 @@ public interface RichIterable<T>
      * @see Collection#toArray(Object[])
      * @since 1.0
      */
+    @Converting
     default <E> E[] toArray(E[] array)
     {
         int size = this.size();
@@ -2486,6 +2665,7 @@ public interface RichIterable<T>
      * @see java.util.AbstractCollection#toString()
      * @since 1.0
      */
+    @Converting
     @Override
     String toString();
 
@@ -2496,6 +2676,7 @@ public interface RichIterable<T>
      * @return a string representation of this collection.
      * @since 1.0
      */
+    @Converting
     default String makeString()
     {
         return this.makeString(", ");
@@ -2508,6 +2689,7 @@ public interface RichIterable<T>
      * @return a string representation of this collection.
      * @since 1.0
      */
+    @Converting
     default String makeString(String separator)
     {
         return this.makeString("", separator, "");
@@ -2520,6 +2702,7 @@ public interface RichIterable<T>
      * @return a string representation of this collection.
      * @since 1.0
      */
+    @Converting
     default String makeString(String start, String separator, String end)
     {
         Appendable stringBuilder = new StringBuilder();
@@ -2533,6 +2716,7 @@ public interface RichIterable<T>
      *
      * @return a string representation of the mapped collection
      */
+    @Converting
     default String makeString(Function<? super T, Object> function, String start, String separator, String end)
     {
         return this.asLazy().collect(function).makeString(start, separator, end);
@@ -2544,6 +2728,7 @@ public interface RichIterable<T>
      *
      * @since 1.0
      */
+    @Converting
     default void appendString(Appendable appendable)
     {
         this.appendString(appendable, ", ");
@@ -2555,6 +2740,7 @@ public interface RichIterable<T>
      *
      * @since 1.0
      */
+    @Converting
     default void appendString(Appendable appendable, String separator)
     {
         this.appendString(appendable, "", separator, "");
@@ -2566,6 +2752,7 @@ public interface RichIterable<T>
      *
      * @since 1.0
      */
+    @Converting
     void appendString(Appendable appendable, String start, String separator, String end);
 
     //endregion [Category: Converting] 🔌
