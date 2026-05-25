@@ -20,24 +20,24 @@
  * The following categories are defined, with links to all annotated methods (class-use pages):
  * </p>
  * <ul>
- *     <li><a href="class-use/Iterating.html">{@link org.eclipse.collections.api.annotation.category.Iterating}</a>
- *         - Methods that traverse elements of a collection</li>
- *     <li><a href="class-use/Counting.html">{@link org.eclipse.collections.api.annotation.category.Counting}</a>
- *         - Methods that count elements or occurrences</li>
- *     <li><a href="class-use/Testing.html">{@link org.eclipse.collections.api.annotation.category.Testing}</a>
- *         - Methods that evaluate boolean conditions against elements</li>
- *     <li><a href="class-use/Finding.html">{@link org.eclipse.collections.api.annotation.category.Finding}</a>
- *         - Methods that locate specific elements such as first, last, min, or max</li>
- *     <li><a href="class-use/Filtering.html">{@link org.eclipse.collections.api.annotation.category.Filtering}</a>
- *         - Methods that select, reject, or partition elements based on a predicate</li>
- *     <li><a href="class-use/Transforming.html">{@link org.eclipse.collections.api.annotation.category.Transforming}</a>
- *         - Methods that apply a function to each element, producing a new collection</li>
- *     <li><a href="class-use/Grouping.html">{@link org.eclipse.collections.api.annotation.category.Grouping}</a>
- *         - Methods that organize elements into groups by a key function</li>
- *     <li><a href="class-use/Aggregating.html">{@link org.eclipse.collections.api.annotation.category.Aggregating}</a>
+ *     <li><a href="class-use/Aggregating.html">Aggregating</a>
  *         - Methods that reduce or fold elements into a single result</li>
- *     <li><a href="class-use/Converting.html">{@link org.eclipse.collections.api.annotation.category.Converting}</a>
+ *     <li><a href="class-use/Converting.html">Converting</a>
  *         - Methods that convert a collection to another type or representation</li>
+ *     <li><a href="class-use/Counting.html">Counting</a>
+ *         - Methods that count elements or occurrences</li>
+ *     <li><a href="class-use/Filtering.html">Filtering</a>
+ *         - Methods that select, reject, or partition elements based on a predicate</li>
+ *     <li><a href="class-use/Finding.html">Finding</a>
+ *         - Methods that locate specific elements such as first, last, min, or max</li>
+ *     <li><a href="class-use/Grouping.html">Grouping</a>
+ *         - Methods that organize elements into groups by a key function</li>
+ *     <li><a href="class-use/Iterating.html">Iterating</a>
+ *         - Methods that traverse elements of a collection</li>
+ *     <li><a href="class-use/Testing.html">Testing</a>
+ *         - Methods that evaluate boolean conditions against elements</li>
+ *     <li><a href="class-use/Transforming.html">Transforming</a>
+ *         - Methods that apply a function to each element, producing a new collection</li>
  * </ul>
  */
 package org.eclipse.collections.api.annotation.category;
