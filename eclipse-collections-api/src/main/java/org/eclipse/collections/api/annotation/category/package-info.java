@@ -34,6 +34,8 @@
  *         - Methods that organize elements into groups by a key function</li>
  *     <li><a href="class-use/Iterating.html">Iterating</a>
  *         - Methods that traverse elements of a collection</li>
+ *     <li><a href="class-use/Mutating.html">Mutating</a>
+ *         - Methods that modify the state or contents of a collection</li>
  *     <li><a href="class-use/Testing.html">Testing</a>
  *         - Methods that evaluate boolean conditions against elements</li>
  *     <li><a href="class-use/Transforming.html">Transforming</a>
