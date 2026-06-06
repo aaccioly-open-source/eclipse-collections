@@ -12,6 +12,12 @@ package org.eclipse.collections.api;
 
 import java.util.Collection;
 
+import org.eclipse.collections.api.annotation.category.Converting;
+import org.eclipse.collections.api.annotation.category.Filtering;
+import org.eclipse.collections.api.annotation.category.Finding;
+import org.eclipse.collections.api.annotation.category.Grouping;
+import org.eclipse.collections.api.annotation.category.Iterating;
+import org.eclipse.collections.api.annotation.category.Transforming;
 import org.eclipse.collections.api.bag.ImmutableBag;
 import org.eclipse.collections.api.bag.MutableBag;
 import org.eclipse.collections.api.block.function.Function;
@@ -46,9 +52,11 @@ import org.eclipse.collections.api.tuple.Pair;
 public interface LazyIterable<T>
         extends RichIterable<T>
 {
+    @Finding
     @Override
     T getFirst();
 
+    @Converting
     @Override
     default ImmutableList<T> toImmutableList()
     {
@@ -57,6 +65,7 @@ public interface LazyIterable<T>
         return mutableList.toImmutable();
     }
 
+    @Converting
     @Override
     default ImmutableSet<T> toImmutableSet()
     {
@@ -65,6 +74,7 @@ public interface LazyIterable<T>
         return mutableSet.toImmutable();
     }
 
+    @Converting
     @Override
     default ImmutableBag<T> toImmutableBag()
     {
@@ -73,6 +83,7 @@ public interface LazyIterable<T>
         return mutableBag.toImmutable();
     }
 
+    @Converting
     @Override
     default Object[] toArray()
     {
@@ -81,6 +92,7 @@ public interface LazyIterable<T>
         return mutableList.toArray();
     }
 
+    @Converting
     @Override
     default <E> E[] toArray(E[] array)
     {
@@ -92,9 +104,11 @@ public interface LazyIterable<T>
     /**
      * Creates a deferred iterable for selecting elements from the current iterable.
      */
+    @Filtering
     @Override
     LazyIterable<T> select(Predicate<? super T> predicate);
 
+    @Filtering
     @Override
     <P> LazyIterable<T> selectWith(Predicate2<? super T, ? super P> predicate, P parameter);
 
@@ -104,47 +118,56 @@ public interface LazyIterable<T>
     /**
      * Creates a deferred iterable for rejecting elements from the current iterable.
      */
+    @Filtering
     @Override
     LazyIterable<T> reject(Predicate<? super T> predicate);
 
+    @Filtering
     @Override
     <P> LazyIterable<T> rejectWith(Predicate2<? super T, ? super P> predicate, P parameter);
 
     /**
      * Creates a deferred iterable for collecting elements from the current iterable.
      */
+    @Transforming
     @Override
     <V> LazyIterable<V> collect(Function<? super T, ? extends V> function);
 
+    @Transforming
     @Override
     <P, V> LazyIterable<V> collectWith(Function2<? super T, ? super P, ? extends V> function, P parameter);
 
     /**
      * Creates a deferred iterable for selecting and collecting elements from the current iterable.
      */
+    @Transforming
     @Override
     <V> LazyIterable<V> collectIf(Predicate<? super T> predicate, Function<? super T, ? extends V> function);
 
     /**
      * Creates a deferred take iterable for the current iterable using the specified count as the limit.
      */
+    @Filtering
     LazyIterable<T> take(int count);
 
     /**
      * Creates a deferred drop iterable for the current iterable using the specified count as the limit.
      */
+    @Filtering
     LazyIterable<T> drop(int count);
 
     /**
      * @see OrderedIterable#takeWhile(Predicate)
      * @since 8.0
      */
+    @Filtering
     LazyIterable<T> takeWhile(Predicate<? super T> predicate);
 
     /**
      * @see OrderedIterable#dropWhile(Predicate)
      * @since 8.0
      */
+    @Filtering
     LazyIterable<T> dropWhile(Predicate<? super T> predicate);
 
     /**
@@ -152,17 +175,20 @@ public interface LazyIterable<T>
      *
      * @since 5.0
      */
+    @Filtering
     LazyIterable<T> distinct();
 
     /**
      * Creates a deferred flattening iterable for the current iterable.
      */
+    @Transforming
     @Override
     <V> LazyIterable<V> flatCollect(Function<? super T, ? extends Iterable<V>> function);
 
     /**
      * @since 9.2
      */
+    @Transforming
     @Override
     default <P, V> LazyIterable<V> flatCollectWith(Function2<? super T, ? super P, ? extends Iterable<V>> function, P parameter)
     {
@@ -172,83 +198,97 @@ public interface LazyIterable<T>
     /**
      * Creates a deferred iterable that will join this iterable with the specified iterable.
      */
+    @Converting
     LazyIterable<T> concatenate(Iterable<T> iterable);
 
     /**
      * Creates a deferred zip iterable.
      */
+    @Transforming
     @Override
     <S> LazyIterable<Pair<T, S>> zip(Iterable<S> that);
 
     /**
      * Creates a deferred zipWithIndex iterable.
      */
+    @Transforming
     @Override
     LazyIterable<Pair<T, Integer>> zipWithIndex();
 
     /**
      * Creates a deferred chunk iterable.
      */
+    @Grouping
     @Override
     LazyIterable<RichIterable<T>> chunk(int size);
 
     /**
      * Creates a deferred tap iterable.
      */
+    @Iterating
     @Override
     LazyIterable<T> tap(Procedure<? super T> procedure);
 
     /**
      * Iterates over this iterable adding all elements into the target collection.
      */
+    @Converting
     @Override
     <R extends Collection<T>> R into(R target);
 
     /**
      * Returns a lazy BooleanIterable which will transform the underlying iterable data to boolean values based on the booleanFunction.
      */
+    @Transforming
     @Override
     LazyBooleanIterable collectBoolean(BooleanFunction<? super T> booleanFunction);
 
     /**
      * Returns a lazy ByteIterable which will transform the underlying iterable data to byte values based on the byteFunction.
      */
+    @Transforming
     @Override
     LazyByteIterable collectByte(ByteFunction<? super T> byteFunction);
 
     /**
      * Returns a lazy CharIterable which will transform the underlying iterable data to char values based on the charFunction.
      */
+    @Transforming
     @Override
     LazyCharIterable collectChar(CharFunction<? super T> charFunction);
 
     /**
      * Returns a lazy DoubleIterable which will transform the underlying iterable data to double values based on the doubleFunction.
      */
+    @Transforming
     @Override
     LazyDoubleIterable collectDouble(DoubleFunction<? super T> doubleFunction);
 
     /**
      * Returns a lazy FloatIterable which will transform the underlying iterable data to float values based on the floatFunction.
      */
+    @Transforming
     @Override
     LazyFloatIterable collectFloat(FloatFunction<? super T> floatFunction);
 
     /**
      * Returns a lazy IntIterable which will transform the underlying iterable data to int values based on the intFunction.
      */
+    @Transforming
     @Override
     LazyIntIterable collectInt(IntFunction<? super T> intFunction);
 
     /**
      * Returns a lazy LongIterable which will transform the underlying iterable data to long values based on the longFunction.
      */
+    @Transforming
     @Override
     LazyLongIterable collectLong(LongFunction<? super T> longFunction);
 
     /**
      * Returns a lazy ShortIterable which will transform the underlying iterable data to short values based on the shortFunction.
      */
+    @Transforming
     @Override
     LazyShortIterable collectShort(ShortFunction<? super T> shortFunction);
 }
