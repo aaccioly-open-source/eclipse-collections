@@ -14,31 +14,31 @@
  * These annotations mirror the foldable regions in {@link org.eclipse.collections.api.RichIterable}
  * and serve as a machine-readable classification system for its methods. Each category annotation is
  * itself annotated with {@link org.eclipse.collections.api.annotation.category.Category}, which carries
- * the category name as a string value.
+ * the category name and icon.
  * </p>
  * <p>
  * The following categories are defined, with links to all annotated methods (class-use pages):
  * </p>
  * <ul>
- *     <li><a href="class-use/Aggregating.html">Aggregating</a>
+ *     <li><a href="class-use/Aggregating.html">Aggregating 📊</a>
  *         - Methods that reduce or fold elements into a single result</li>
- *     <li><a href="class-use/Converting.html">Converting</a>
+ *     <li><a href="class-use/Converting.html">Converting 🔌</a>
  *         - Methods that convert a collection to another type or representation</li>
- *     <li><a href="class-use/Counting.html">Counting</a>
+ *     <li><a href="class-use/Counting.html">Counting 🔢</a>
  *         - Methods that count elements or occurrences</li>
- *     <li><a href="class-use/Filtering.html">Filtering</a>
+ *     <li><a href="class-use/Filtering.html">Filtering 🚰</a>
  *         - Methods that select, reject, or partition elements based on a predicate</li>
- *     <li><a href="class-use/Finding.html">Finding</a>
+ *     <li><a href="class-use/Finding.html">Finding 🔎</a>
  *         - Methods that locate specific elements such as first, last, min, or max</li>
- *     <li><a href="class-use/Grouping.html">Grouping</a>
+ *     <li><a href="class-use/Grouping.html">Grouping 🏘️</a>
  *         - Methods that organize elements into groups by a key function</li>
- *     <li><a href="class-use/Iterating.html">Iterating</a>
+ *     <li><a href="class-use/Iterating.html">Iterating 🔄</a>
  *         - Methods that traverse elements of a collection</li>
- *     <li><a href="class-use/Mutating.html">Mutating</a>
+ *     <li><a href="class-use/Mutating.html">Mutating 🧬</a>
  *         - Methods that modify the state or contents of a collection</li>
- *     <li><a href="class-use/Testing.html">Testing</a>
+ *     <li><a href="class-use/Testing.html">Testing ✅</a>
  *         - Methods that evaluate boolean conditions against elements</li>
- *     <li><a href="class-use/Transforming.html">Transforming</a>
+ *     <li><a href="class-use/Transforming.html">Transforming 🦋</a>
  *         - Methods that apply a function to each element, producing a new collection</li>
  * </ul>
  */

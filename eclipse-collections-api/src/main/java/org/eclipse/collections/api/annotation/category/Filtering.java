@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-@Category("Filtering")
+@Category(value = "Filtering", icon = "🚰")
 public @interface Filtering
 {
 }

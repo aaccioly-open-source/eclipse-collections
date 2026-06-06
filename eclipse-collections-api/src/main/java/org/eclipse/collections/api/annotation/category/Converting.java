@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-@Category("Converting")
+@Category(value = "Converting", icon = "🔌")
 public @interface Converting
 {
 }

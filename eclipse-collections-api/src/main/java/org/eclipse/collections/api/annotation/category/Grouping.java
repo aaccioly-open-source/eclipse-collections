@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-@Category("Grouping")
+@Category(value = "Grouping", icon = "🏘️")
 public @interface Grouping
 {
 }

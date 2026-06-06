@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-@Category("Mutating")
+@Category(value = "Mutating", icon = "🧬")
 public @interface Mutating
 {
 }

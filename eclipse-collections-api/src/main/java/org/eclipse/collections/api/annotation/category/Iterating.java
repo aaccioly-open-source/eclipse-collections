@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-@Category("Iterating")
+@Category(value = "Iterating", icon = "🔄")
 public @interface Iterating
 {
 }

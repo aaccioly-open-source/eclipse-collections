@@ -29,4 +29,9 @@ public @interface Category
      * The name of the category.
      */
     String value();
+
+    /**
+     * The icon that represents the category.
+     */
+    String icon() default "";
 }
