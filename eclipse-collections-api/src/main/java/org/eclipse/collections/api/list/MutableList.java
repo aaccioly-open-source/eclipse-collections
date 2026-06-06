@@ -10,7 +10,6 @@
 
 package org.eclipse.collections.api.list;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -72,206 +71,245 @@ import org.eclipse.collections.api.tuple.Pair;
  * Links are provided below as a convenience to help discover specific methods in Javadoc.
  *
  * <ul>
- * <li><b>Mutating 🧬</b>
+ * <li><b>Converting 🔌</b>
  * <ul><li>
- * {@link #with(Object)}, {@link #without(Object)}, {@link #withAll(Iterable)}, {@link #withoutAll(Iterable)},
- * {@link #sortThis()}, {@link #sortThis(Comparator)}, {@link #sortThisBy(Function)},
- * {@link #sortThisByBoolean(BooleanFunction)}, {@link #sortThisByByte(ByteFunction)},
- * {@link #sortThisByChar(CharFunction)}, {@link #sortThisByDouble(DoubleFunction)},
- * {@link #sortThisByFloat(FloatFunction)}, {@link #sortThisByInt(IntFunction)},
- * {@link #sortThisByLong(LongFunction)}, {@link #sortThisByShort(ShortFunction)},
- * {@link #reverseThis()}, {@link #shuffleThis()}, {@link #shuffleThis(Random)}
+ * {@link #clone()}, {@link #hashCode()}, {@link #newEmpty()}, {@link #reversed()}, {@link #toArray()},
+ * {@link #toArray(Object[])}, {@link #toImmutable()}, {@link #toImmutableList()}, {@link #toReversed()}
+ * </li></ul>
+ * <li><b>Filtering 🚰</b>
+ * <ul><li>
+ * {@link #distinct()}, {@link #distinct(HashingStrategy)}, {@link #distinctBy(Function)}, {@link #drop(int)},
+ * {@link #dropWhile(Predicate)}, {@link #partition(Predicate)}, {@link #partitionWhile(Predicate)},
+ * {@link #partitionWith(Predicate2, Object)}, {@link #reject(Predicate)}, {@link #rejectWith(Predicate2, Object)},
+ * {@link #rejectWithIndex(ObjectIntPredicate)}, {@link #select(Predicate)}, {@link #selectInstancesOf(Class)},
+ * {@link #selectWith(Predicate2, Object)}, {@link #selectWithIndex(ObjectIntPredicate)}, {@link #subList(int, int)},
+ * {@link #take(int)}, {@link #takeWhile(Predicate)}
  * </li></ul>
  * <li><b>Finding 🔎</b>
  * <ul><li>
  * {@link #getFirst()}, {@link #getLast()}, {@link #indexOf(Object)}
  * </li></ul>
- * <li><b>Filtering 🚰</b>
- * <ul><li>
- * {@link #select(Predicate)}, {@link #selectWith(Predicate2, Object)}, {@link #selectInstancesOf(Class)},
- * {@link #reject(Predicate)}, {@link #rejectWith(Predicate2, Object)},
- * {@link #selectWithIndex(ObjectIntPredicate)}, {@link #rejectWithIndex(ObjectIntPredicate)},
- * {@link #partition(Predicate)}, {@link #partitionWith(Predicate2, Object)},
- * {@link #distinct()}, {@link #distinct(HashingStrategy)}, {@link #distinctBy(Function)},
- * {@link #subList(int, int)}, {@link #take(int)}, {@link #takeWhile(Predicate)}, {@link #drop(int)},
- * {@link #dropWhile(Predicate)}, {@link #partitionWhile(Predicate)}
- * </li></ul>
- * <li><b>Transforming 🦋</b>
- * <ul><li>
- * {@link #collect(Function)}, {@link #collectWithIndex(ObjectIntToObjectFunction)}, {@link #collectWith(Function2, Object)},
- * {@link #collectIf(Predicate, Function)}, {@link #flatCollect(Function)}, {@link #flatCollectWith(Function2, Object)},
- * {@link #collectBoolean(BooleanFunction)}, {@link #collectByte(ByteFunction)}, {@link #collectChar(CharFunction)},
- * {@link #collectDouble(DoubleFunction)}, {@link #collectFloat(FloatFunction)}, {@link #collectInt(IntFunction)},
- * {@link #collectLong(LongFunction)}, {@link #collectShort(ShortFunction)},
- * {@link #zip(Iterable)}, {@link #zipWithIndex()},
- * {@link #makeString()}, {@link #appendString(Appendable)},
- * {@link #appendString(Appendable, String, String, String)}
- * </li></ul>
  * <li><b>Grouping 🏘️</b>
  * <ul><li>
  * {@link #groupBy(Function)}, {@link #groupByEach(Function)}
  * </li></ul>
- * <li><b>Converting 🔌</b>
- * <ul><li>
- * {@link #toArray()}, {@link #toArray(Object[])}, {@link #newEmpty()}, {@link #clone()}, {@link #hashCode()},
- * {@link #toImmutable()}, {@link #toReversed()}, {@link #toImmutableList()}, {@link #reversed()}, {@link #into(Collection)}
- * </li></ul>
  * <li><b>Iterating 🔄</b>
  * <ul><li>
- * {@link #tap(Procedure)}, {@link #asLazy()}, {@link #asParallel(ExecutorService, int)},
- * {@link #asUnmodifiable()}, {@link #asSynchronized()}, {@link #asReversed()}
+ * {@link #asLazy()}, {@link #asParallel(ExecutorService, int)}, {@link #asReversed()}, {@link #asSynchronized()},
+ * {@link #asUnmodifiable()}, {@link #tap(Procedure)}
+ * </li></ul>
+ * <li><b>Mutating 🧬</b>
+ * <ul><li>
+ * {@link #reverseThis()}, {@link #shuffleThis()}, {@link #shuffleThis(Random)}, {@link #sortThis()},
+ * {@link #sortThis(Comparator)}, {@link #sortThisBy(Function)}, {@link #sortThisByBoolean(BooleanFunction)},
+ * {@link #sortThisByByte(ByteFunction)}, {@link #sortThisByChar(CharFunction)},
+ * {@link #sortThisByDouble(DoubleFunction)}, {@link #sortThisByFloat(FloatFunction)},
+ * {@link #sortThisByInt(IntFunction)}, {@link #sortThisByLong(LongFunction)}, {@link #sortThisByShort(ShortFunction)},
+ * {@link #with(Object)}, {@link #withAll(Iterable)}, {@link #without(Object)}, {@link #withoutAll(Iterable)}
+ * </li></ul>
+ * <li><b>Transforming 🦋</b>
+ * <ul><li>
+ * {@link #appendString(Appendable)}, {@link #appendString(Appendable, String, String, String)},
+ * {@link #collect(Function)}, {@link #collectBoolean(BooleanFunction)}, {@link #collectByte(ByteFunction)},
+ * {@link #collectChar(CharFunction)}, {@link #collectDouble(DoubleFunction)}, {@link #collectFloat(FloatFunction)},
+ * {@link #collectIf(Predicate, Function)}, {@link #collectInt(IntFunction)}, {@link #collectLong(LongFunction)},
+ * {@link #collectShort(ShortFunction)}, {@link #collectWith(Function2, Object)},
+ * {@link #collectWithIndex(ObjectIntToObjectFunction)}, {@link #flatCollect(Function)},
+ * {@link #flatCollectWith(Function2, Object)}, {@link #makeString()}, {@link #zip(Iterable)}, {@link #zipWithIndex()}
  * </li></ul>
  * </ul>
  */
 public interface MutableList<T>
         extends MutableCollection<T>, List<T>, Cloneable, ListIterable<T>
 {
-    //region [Category: Mutating] 🧬
+    //region [Category: Converting] 🔌
 
-    @Mutating
+    @Converting
+    MutableList<T> clone();
+
+    @Converting
     @Override
-    default MutableList<T> with(T element)
+    int hashCode();
+
+    @Converting
+    @Override
+    MutableList<T> newEmpty();
+
+    /**
+     * Returns a reverse-order view of this list. Changes to the returned list write through to this list,
+     * and vice versa.
+     */
+    @Converting
+    MutableList<T> reversed();
+
+    @Converting
+    @Override
+    default <T1> T1[] toArray(T1[] a)
     {
-        this.add(element);
-        return this;
+        return MutableCollection.super.toArray(a);
     }
 
-    @Mutating
+    @Converting
     @Override
-    default MutableList<T> without(T element)
+    default Object[] toArray()
     {
-        this.remove(element);
-        return this;
-    }
-
-    @Mutating
-    @Override
-    default MutableList<T> withAll(Iterable<? extends T> elements)
-    {
-        this.addAllIterable(elements);
-        return this;
-    }
-
-    @Mutating
-    @Override
-    default MutableList<T> withoutAll(Iterable<? extends T> elements)
-    {
-        this.removeAllIterable(elements);
-        return this;
+        return MutableCollection.super.toArray();
     }
 
     /**
-     * Sorts the internal data structure of this list and returns the list itself as a convenience.
+     * Returns an immutable copy of this list. If the list is immutable, it returns itself.
+     */
+    @Converting
+    @Override
+    default ImmutableList<T> toImmutable()
+    {
+        return Lists.immutable.withAll(this);
+    }
+
+    /**
+     * Converts the MutableList to the default ImmutableList implementation.
      *
-     * @since 10.0 - Added default implementation.
+     * @since 11.0
      */
-    @Mutating
-    default MutableList<T> sortThis(Comparator<? super T> comparator)
+    @Converting
+    @Override
+    default ImmutableList<T> toImmutableList()
     {
-        this.sort(comparator);
-        return this;
+        return this.toImmutable();
     }
 
     /**
-     * Sorts the internal data structure of this list and returns the list itself as a convenience.
+     * Returns a new MutableList in reverse order.
+     */
+    @Converting
+    @Override
+    default MutableList<T> toReversed()
+    {
+        return this.toList().reverseThis();
+    }
+
+    //endregion [Category: Converting] 🔌
+
+    //region [Category: Filtering] 🚰
+
+    /**
+     * Returns a new {@code ListIterable} containing the distinct elements in this list.
      *
-     * @since 10.0 - Added default implementation.
+     * @since 7.0
      */
-    @Mutating
-    default MutableList<T> sortThis()
+    @Filtering
+    @Override
+    MutableList<T> distinct();
+
+    /**
+     * Returns a new {@code ListIterable} containing the distinct elements in this list. Takes HashingStrategy.
+     *
+     * @since 7.0
+     */
+    @Filtering
+    @Override
+    MutableList<T> distinct(HashingStrategy<? super T> hashingStrategy);
+
+    /**
+     * @since 9.0
+     */
+    @Filtering
+    @Override
+    <V> MutableList<T> distinctBy(Function<? super T, ? extends V> function);
+
+    @Filtering
+    @Override
+    MutableList<T> drop(int count);
+
+    @Filtering
+    @Override
+    MutableList<T> dropWhile(Predicate<? super T> predicate);
+
+    @Filtering
+    @Override
+    PartitionMutableList<T> partition(Predicate<? super T> predicate);
+
+    @Filtering
+    @Override
+    PartitionMutableList<T> partitionWhile(Predicate<? super T> predicate);
+
+    @Filtering
+    @Override
+    <P> PartitionMutableList<T> partitionWith(Predicate2<? super T, ? super P> predicate, P parameter);
+
+    @Filtering
+    @Override
+    default MutableList<T> reject(Predicate<? super T> predicate)
     {
-        return this.sortThis(null);
+        return this.reject(predicate, this.newEmpty());
+    }
+
+    @Filtering
+    @Override
+    default <P> MutableList<T> rejectWith(Predicate2<? super T, ? super P> predicate, P parameter)
+    {
+        return this.rejectWith(predicate, parameter, this.newEmpty());
     }
 
     /**
-     * Sorts the internal data structure of this list based on the natural order of the attribute returned by {@code
-     * function}.
+     * Returns a new MutableList with all elements of the collection that return false when evaluating the specified
+     * predicate which is supplied each element and its relative index.
+     *
+     * @since 11.0
      */
-    @Mutating
-    default <V extends Comparable<? super V>> MutableList<T> sortThisBy(Function<? super T, ? extends V> function)
+    @Filtering
+    @Override
+    default MutableList<T> rejectWithIndex(ObjectIntPredicate<? super T> predicate)
     {
-        return this.sortThis(SerializableComparators.byFunction(function));
+        int[] index = {0};
+        return this.reject(each -> predicate.accept(each, index[0]++));
+    }
+
+    @Filtering
+    @Override
+    default MutableList<T> select(Predicate<? super T> predicate)
+    {
+        return this.select(predicate, this.newEmpty());
+    }
+
+    @Filtering
+    @Override
+    <S> MutableList<S> selectInstancesOf(Class<S> clazz);
+
+    @Filtering
+    @Override
+    default <P> MutableList<T> selectWith(Predicate2<? super T, ? super P> predicate, P parameter)
+    {
+        return this.selectWith(predicate, parameter, this.newEmpty());
     }
 
     /**
-     * @since 6.0
+     * Returns a new MutableList with all elements of the collection that return true when evaluating the specified
+     * predicate which is supplied each element and its relative index.
+     *
+     * @since 11.0
      */
-    @Mutating
-    MutableList<T> sortThisByInt(IntFunction<? super T> function);
-
-    /**
-     * @since 6.0
-     */
-    @Mutating
-    MutableList<T> sortThisByBoolean(BooleanFunction<? super T> function);
-
-    /**
-     * @since 6.0
-     */
-    @Mutating
-    MutableList<T> sortThisByChar(CharFunction<? super T> function);
-
-    /**
-     * @since 6.0
-     */
-    @Mutating
-    MutableList<T> sortThisByByte(ByteFunction<? super T> function);
-
-    /**
-     * @since 6.0
-     */
-    @Mutating
-    MutableList<T> sortThisByShort(ShortFunction<? super T> function);
-
-    /**
-     * @since 6.0
-     */
-    @Mutating
-    MutableList<T> sortThisByFloat(FloatFunction<? super T> function);
-
-    /**
-     * @since 6.0
-     */
-    @Mutating
-    MutableList<T> sortThisByLong(LongFunction<? super T> function);
-
-    /**
-     * @since 6.0
-     */
-    @Mutating
-    MutableList<T> sortThisByDouble(DoubleFunction<? super T> function);
-
-    /**
-     * Mutates this list by reversing its order and returns the current list as a result.
-     */
-    @Mutating
-    default MutableList<T> reverseThis()
+    @Filtering
+    @Override
+    default MutableList<T> selectWithIndex(ObjectIntPredicate<? super T> predicate)
     {
-        Collections.reverse(this);
-        return this;
+        int[] index = {0};
+        return this.select(each -> predicate.accept(each, index[0]++));
     }
 
-    /**
-     * Mutates this list by shuffling its elements.
-     */
-    @Mutating
-    default MutableList<T> shuffleThis()
-    {
-        Collections.shuffle(this);
-        return this;
-    }
+    @Filtering
+    @Override
+    MutableList<T> subList(int fromIndex, int toIndex);
 
-    /**
-     * Mutates this list by shuffling its elements using the specified random.
-     */
-    @Mutating
-    default MutableList<T> shuffleThis(Random random)
-    {
-        Collections.shuffle(this, random);
-        return this;
-    }
+    @Filtering
+    @Override
+    MutableList<T> take(int count);
 
-    //endregion [Category: Mutating] 🧬
+    @Filtering
+    @Override
+    MutableList<T> takeWhile(Predicate<? super T> predicate);
+
+    //endregion [Category: Filtering] 🚰
 
     //region [Category: Finding] 🔎
 
@@ -306,145 +344,223 @@ public interface MutableList<T>
 
     //endregion [Category: Finding] 🔎
 
-    //region [Category: Filtering] 🚰
+    //region [Category: Grouping] 🏘️
 
-    @Filtering
+    @Grouping
     @Override
-    default MutableList<T> select(Predicate<? super T> predicate)
+    <V> MutableListMultimap<V, T> groupBy(Function<? super T, ? extends V> function);
+
+    @Grouping
+    @Override
+    <V> MutableListMultimap<V, T> groupByEach(Function<? super T, ? extends Iterable<V>> function);
+
+    //endregion [Category: Grouping] 🏘️
+
+    //region [Category: Iterating] 🔄
+
+    @Iterating
+    @Override
+    LazyIterable<T> asLazy();
+
+    @Iterating
+    @Override
+    ParallelListIterable<T> asParallel(ExecutorService executorService, int batchSize);
+
+    @Iterating
+    @Override
+    default LazyIterable<T> asReversed()
     {
-        return this.select(predicate, this.newEmpty());
+        return ListIterable.super.asReversed();
     }
 
-    @Filtering
+    @Iterating
     @Override
-    default <P> MutableList<T> selectWith(Predicate2<? super T, ? super P> predicate, P parameter)
-    {
-        return this.selectWith(predicate, parameter, this.newEmpty());
-    }
-
-    @Filtering
-    @Override
-    default MutableList<T> reject(Predicate<? super T> predicate)
-    {
-        return this.reject(predicate, this.newEmpty());
-    }
-
-    @Filtering
-    @Override
-    default <P> MutableList<T> rejectWith(Predicate2<? super T, ? super P> predicate, P parameter)
-    {
-        return this.rejectWith(predicate, parameter, this.newEmpty());
-    }
-
-    @Filtering
-    @Override
-    PartitionMutableList<T> partition(Predicate<? super T> predicate);
-
-    @Filtering
-    @Override
-    <P> PartitionMutableList<T> partitionWith(Predicate2<? super T, ? super P> predicate, P parameter);
-
-    @Filtering
-    @Override
-    <S> MutableList<S> selectInstancesOf(Class<S> clazz);
+    MutableList<T> asSynchronized();
 
     /**
-     * Returns a new MutableList with all elements of the collection that return true when evaluating the specified
-     * predicate which is supplied each element and its relative index.
+     * Returns an unmodifiable view of the list.
      *
-     * @since 11.0
+     * @return an unmodifiable view of this list
      */
-    @Filtering
+    @Iterating
     @Override
-    default MutableList<T> selectWithIndex(ObjectIntPredicate<? super T> predicate)
+    MutableList<T> asUnmodifiable();
+
+    @Iterating
+    @Override
+    default MutableList<T> tap(Procedure<? super T> procedure)
     {
-        int[] index = {0};
-        return this.select(each -> predicate.accept(each, index[0]++));
+        this.forEach(procedure);
+        return this;
+    }
+
+    //endregion [Category: Iterating] 🔄
+
+    //region [Category: Mutating] 🧬
+
+    /**
+     * Mutates this list by reversing its order and returns the current list as a result.
+     */
+    @Mutating
+    default MutableList<T> reverseThis()
+    {
+        Collections.reverse(this);
+        return this;
     }
 
     /**
-     * Returns a new MutableList with all elements of the collection that return false when evaluating the specified
-     * predicate which is supplied each element and its relative index.
-     *
-     * @since 11.0
+     * Mutates this list by shuffling its elements.
      */
-    @Filtering
-    @Override
-    default MutableList<T> rejectWithIndex(ObjectIntPredicate<? super T> predicate)
+    @Mutating
+    default MutableList<T> shuffleThis()
     {
-        int[] index = {0};
-        return this.reject(each -> predicate.accept(each, index[0]++));
+        Collections.shuffle(this);
+        return this;
     }
 
     /**
-     * Returns a new {@code ListIterable} containing the distinct elements in this list.
-     *
-     * @since 7.0
+     * Mutates this list by shuffling its elements using the specified random.
      */
-    @Filtering
-    @Override
-    MutableList<T> distinct();
+    @Mutating
+    default MutableList<T> shuffleThis(Random random)
+    {
+        Collections.shuffle(this, random);
+        return this;
+    }
 
     /**
-     * Returns a new {@code ListIterable} containing the distinct elements in this list. Takes HashingStrategy.
+     * Sorts the internal data structure of this list and returns the list itself as a convenience.
      *
-     * @since 7.0
+     * @since 10.0 - Added default implementation.
      */
-    @Filtering
-    @Override
-    MutableList<T> distinct(HashingStrategy<? super T> hashingStrategy);
+    @Mutating
+    default MutableList<T> sortThis()
+    {
+        return this.sortThis(null);
+    }
 
     /**
-     * @since 9.0
+     * Sorts the internal data structure of this list and returns the list itself as a convenience.
+     *
+     * @since 10.0 - Added default implementation.
      */
-    @Filtering
-    @Override
-    <V> MutableList<T> distinctBy(Function<? super T, ? extends V> function);
+    @Mutating
+    default MutableList<T> sortThis(Comparator<? super T> comparator)
+    {
+        this.sort(comparator);
+        return this;
+    }
 
-    @Filtering
-    @Override
-    MutableList<T> subList(int fromIndex, int toIndex);
+    /**
+     * Sorts the internal data structure of this list based on the natural order of the attribute returned by {@code
+     * function}.
+     */
+    @Mutating
+    default <V extends Comparable<? super V>> MutableList<T> sortThisBy(Function<? super T, ? extends V> function)
+    {
+        return this.sortThis(SerializableComparators.byFunction(function));
+    }
 
-    @Filtering
-    @Override
-    MutableList<T> take(int count);
+    /**
+     * @since 6.0
+     */
+    @Mutating
+    MutableList<T> sortThisByBoolean(BooleanFunction<? super T> function);
 
-    @Filtering
-    @Override
-    MutableList<T> takeWhile(Predicate<? super T> predicate);
+    /**
+     * @since 6.0
+     */
+    @Mutating
+    MutableList<T> sortThisByByte(ByteFunction<? super T> function);
 
-    @Filtering
-    @Override
-    MutableList<T> drop(int count);
+    /**
+     * @since 6.0
+     */
+    @Mutating
+    MutableList<T> sortThisByChar(CharFunction<? super T> function);
 
-    @Filtering
-    @Override
-    MutableList<T> dropWhile(Predicate<? super T> predicate);
+    /**
+     * @since 6.0
+     */
+    @Mutating
+    MutableList<T> sortThisByDouble(DoubleFunction<? super T> function);
 
-    @Filtering
-    @Override
-    PartitionMutableList<T> partitionWhile(Predicate<? super T> predicate);
+    /**
+     * @since 6.0
+     */
+    @Mutating
+    MutableList<T> sortThisByFloat(FloatFunction<? super T> function);
 
-    //endregion [Category: Filtering] 🚰
+    /**
+     * @since 6.0
+     */
+    @Mutating
+    MutableList<T> sortThisByInt(IntFunction<? super T> function);
+
+    /**
+     * @since 6.0
+     */
+    @Mutating
+    MutableList<T> sortThisByLong(LongFunction<? super T> function);
+
+    /**
+     * @since 6.0
+     */
+    @Mutating
+    MutableList<T> sortThisByShort(ShortFunction<? super T> function);
+
+    @Mutating
+    @Override
+    default MutableList<T> with(T element)
+    {
+        this.add(element);
+        return this;
+    }
+
+    @Mutating
+    @Override
+    default MutableList<T> withAll(Iterable<? extends T> elements)
+    {
+        this.addAllIterable(elements);
+        return this;
+    }
+
+    @Mutating
+    @Override
+    default MutableList<T> without(T element)
+    {
+        this.remove(element);
+        return this;
+    }
+
+    @Mutating
+    @Override
+    default MutableList<T> withoutAll(Iterable<? extends T> elements)
+    {
+        this.removeAllIterable(elements);
+        return this;
+    }
+
+    //endregion [Category: Mutating] 🧬
 
     //region [Category: Transforming] 🦋
+
+    @Transforming
+    @Override
+    default void appendString(Appendable appendable)
+    {
+        ListIterable.super.appendString(appendable);
+    }
+
+    @Transforming
+    @Override
+    void appendString(Appendable appendable, String start, String separator, String end);
 
     @Transforming
     @Override
     default <V> MutableList<V> collect(Function<? super T, ? extends V> function)
     {
         return this.collect(function, Lists.mutable.withInitialCapacity(this.size()));
-    }
-
-    /**
-     * @since 9.1.
-     */
-    @Transforming
-    @Override
-    default <V> MutableList<V> collectWithIndex(ObjectIntToObjectFunction<? super T, ? extends V> function)
-    {
-        int[] index = {0};
-        return this.collect(each -> function.valueOf(each, index[0]++));
     }
 
     @Transforming
@@ -484,6 +600,13 @@ public interface MutableList<T>
 
     @Transforming
     @Override
+    default <V> MutableList<V> collectIf(Predicate<? super T> predicate, Function<? super T, ? extends V> function)
+    {
+        return this.collectIf(predicate, function, Lists.mutable.empty());
+    }
+
+    @Transforming
+    @Override
     default MutableIntList collectInt(IntFunction<? super T> intFunction)
     {
         return this.collectInt(intFunction, IntLists.mutable.withInitialCapacity(this.size()));
@@ -510,11 +633,15 @@ public interface MutableList<T>
         return this.collectWith(function, parameter, Lists.mutable.withInitialCapacity(this.size()));
     }
 
+    /**
+     * @since 9.1.
+     */
     @Transforming
     @Override
-    default <V> MutableList<V> collectIf(Predicate<? super T> predicate, Function<? super T, ? extends V> function)
+    default <V> MutableList<V> collectWithIndex(ObjectIntToObjectFunction<? super T, ? extends V> function)
     {
-        return this.collectIf(predicate, function, Lists.mutable.empty());
+        int[] index = {0};
+        return this.collect(each -> function.valueOf(each, index[0]++));
     }
 
     @Transforming
@@ -536,14 +663,6 @@ public interface MutableList<T>
 
     @Transforming
     @Override
-    <S> MutableList<Pair<T, S>> zip(Iterable<S> that);
-
-    @Transforming
-    @Override
-    MutableList<Pair<T, Integer>> zipWithIndex();
-
-    @Transforming
-    @Override
     default String makeString()
     {
         return ListIterable.super.makeString();
@@ -551,134 +670,11 @@ public interface MutableList<T>
 
     @Transforming
     @Override
-    default void appendString(Appendable appendable)
-    {
-        ListIterable.super.appendString(appendable);
-    }
+    <S> MutableList<Pair<T, S>> zip(Iterable<S> that);
 
     @Transforming
     @Override
-    void appendString(Appendable appendable, String start, String separator, String end);
+    MutableList<Pair<T, Integer>> zipWithIndex();
 
     //endregion [Category: Transforming] 🦋
-
-    //region [Category: Grouping] 🏘️
-
-    @Grouping
-    @Override
-    <V> MutableListMultimap<V, T> groupBy(Function<? super T, ? extends V> function);
-
-    @Grouping
-    @Override
-    <V> MutableListMultimap<V, T> groupByEach(Function<? super T, ? extends Iterable<V>> function);
-
-    //endregion [Category: Grouping] 🏘️
-
-    //region [Category: Converting] 🔌
-
-    @Converting
-    @Override
-    default Object[] toArray()
-    {
-        return MutableCollection.super.toArray();
-    }
-
-    @Converting
-    @Override
-    default <T1> T1[] toArray(T1[] a)
-    {
-        return MutableCollection.super.toArray(a);
-    }
-
-    @Converting
-    @Override
-    MutableList<T> newEmpty();
-
-    @Converting
-    MutableList<T> clone();
-
-    @Converting
-    @Override
-    int hashCode();
-
-    /**
-     * Returns an immutable copy of this list. If the list is immutable, it returns itself.
-     */
-    @Converting
-    @Override
-    default ImmutableList<T> toImmutable()
-    {
-        return Lists.immutable.withAll(this);
-    }
-
-    /**
-     * Returns a new MutableList in reverse order.
-     */
-    @Converting
-    @Override
-    default MutableList<T> toReversed()
-    {
-        return this.toList().reverseThis();
-    }
-
-    /**
-     * Converts the MutableList to the default ImmutableList implementation.
-     *
-     * @since 11.0
-     */
-    @Converting
-    @Override
-    default ImmutableList<T> toImmutableList()
-    {
-        return this.toImmutable();
-    }
-
-    /**
-     * Returns a reverse-order view of this list. Changes to the returned list write through to this list,
-     * and vice versa.
-     */
-    @Converting
-    MutableList<T> reversed();
-
-    //endregion [Category: Converting] 🔌
-
-    //region [Category: Iterating] 🔄
-
-    @Iterating
-    @Override
-    default MutableList<T> tap(Procedure<? super T> procedure)
-    {
-        this.forEach(procedure);
-        return this;
-    }
-
-    @Iterating
-    @Override
-    LazyIterable<T> asLazy();
-
-    @Iterating
-    @Override
-    ParallelListIterable<T> asParallel(ExecutorService executorService, int batchSize);
-
-    /**
-     * Returns an unmodifiable view of the list.
-     *
-     * @return an unmodifiable view of this list
-     */
-    @Iterating
-    @Override
-    MutableList<T> asUnmodifiable();
-
-    @Iterating
-    @Override
-    MutableList<T> asSynchronized();
-
-    @Iterating
-    @Override
-    default LazyIterable<T> asReversed()
-    {
-        return ListIterable.super.asReversed();
-    }
-
-    //endregion [Category: Iterating] 🔄
 }
