@@ -46,60 +46,72 @@ import org.eclipse.collections.api.tuple.Pair;
 /**
  * A LazyIterable is RichIterable which will defer evaluation for certain methods like select, reject, collect, etc.
  * Any methods that do not return a LazyIterable when called will cause evaluation to be forced.
+ * <p>
+ * The methods in LazyIterable are organized into the following method categories via region comments which are collapsible
+ * in various IDEs.
+ * Links are provided below as a convenience to help discover specific methods in Javadoc.
+ *
+ * <ul>
+ * <li><b>Iterating 🔄</b>
+ * <ul><li>
+ * {@link #tap(Procedure)}
+ * </li></ul>
+ * <li><b>Finding 🔎</b>
+ * <ul><li>
+ * {@link #getFirst()}
+ * </li></ul>
+ * <li><b>Filtering 🚰</b>
+ * <ul><li>
+ * {@link #select(Predicate)}, {@link #selectWith(Predicate2, Object)}, {@link #selectInstancesOf(Class)},
+ * {@link #reject(Predicate)}, {@link #rejectWith(Predicate2, Object)},
+ * {@link #take(int)}, {@link #drop(int)}, {@link #takeWhile(Predicate)}, {@link #dropWhile(Predicate)},
+ * {@link #distinct()}
+ * </li></ul>
+ * <li><b>Transforming 🦋</b>
+ * <ul><li>
+ * {@link #collect(Function)}, {@link #collectWith(Function2, Object)}, {@link #collectIf(Predicate, Function)},
+ * {@link #flatCollect(Function)}, {@link #flatCollectWith(Function2, Object)},
+ * {@link #zip(Iterable)}, {@link #zipWithIndex()},
+ * {@link #collectBoolean(BooleanFunction)}, {@link #collectByte(ByteFunction)}, {@link #collectChar(CharFunction)},
+ * {@link #collectDouble(DoubleFunction)}, {@link #collectFloat(FloatFunction)}, {@link #collectInt(IntFunction)},
+ * {@link #collectLong(LongFunction)}, {@link #collectShort(ShortFunction)}
+ * </li></ul>
+ * <li><b>Grouping 🏘️</b>
+ * <ul><li>
+ * {@link #chunk(int)}
+ * </li></ul>
+ * <li><b>Converting 🔌</b>
+ * <ul><li>
+ * {@link #toImmutableList()}, {@link #toImmutableSet()}, {@link #toImmutableBag()},
+ * {@link #toArray()}, {@link #toArray(Object[])}, {@link #concatenate(Iterable)}, {@link #into(Collection)}
+ * </li></ul>
+ * </ul>
  *
  * @since 1.0
  */
 public interface LazyIterable<T>
         extends RichIterable<T>
 {
+    //region [Category: Iterating] 🔄
+
+    /**
+     * Creates a deferred tap iterable.
+     */
+    @Iterating
+    @Override
+    LazyIterable<T> tap(Procedure<? super T> procedure);
+
+    //endregion [Category: Iterating] 🔄
+
+    //region [Category: Finding] 🔎
+
     @Finding
     @Override
     T getFirst();
 
-    @Converting
-    @Override
-    default ImmutableList<T> toImmutableList()
-    {
-        MutableList<T> mutableList = Lists.mutable.empty();
-        this.forEach(mutableList::add);
-        return mutableList.toImmutable();
-    }
+    //endregion [Category: Finding] 🔎
 
-    @Converting
-    @Override
-    default ImmutableSet<T> toImmutableSet()
-    {
-        MutableSet<T> mutableSet = Sets.mutable.empty();
-        this.forEach(mutableSet::add);
-        return mutableSet.toImmutable();
-    }
-
-    @Converting
-    @Override
-    default ImmutableBag<T> toImmutableBag()
-    {
-        MutableBag<T> mutableBag = Bags.mutable.empty();
-        this.forEach(mutableBag::add);
-        return mutableBag.toImmutable();
-    }
-
-    @Converting
-    @Override
-    default Object[] toArray()
-    {
-        MutableList<T> mutableList = Lists.mutable.empty();
-        this.forEach(mutableList::add);
-        return mutableList.toArray();
-    }
-
-    @Converting
-    @Override
-    default <E> E[] toArray(E[] array)
-    {
-        MutableList<T> mutableList = Lists.mutable.empty();
-        this.forEach(mutableList::add);
-        return mutableList.toArray(array);
-    }
+    //region [Category: Filtering] 🚰
 
     /**
      * Creates a deferred iterable for selecting elements from the current iterable.
@@ -112,6 +124,7 @@ public interface LazyIterable<T>
     @Override
     <P> LazyIterable<T> selectWith(Predicate2<? super T, ? super P> predicate, P parameter);
 
+    @Filtering
     @Override
     <S> LazyIterable<S> selectInstancesOf(Class<S> clazz);
 
@@ -125,24 +138,6 @@ public interface LazyIterable<T>
     @Filtering
     @Override
     <P> LazyIterable<T> rejectWith(Predicate2<? super T, ? super P> predicate, P parameter);
-
-    /**
-     * Creates a deferred iterable for collecting elements from the current iterable.
-     */
-    @Transforming
-    @Override
-    <V> LazyIterable<V> collect(Function<? super T, ? extends V> function);
-
-    @Transforming
-    @Override
-    <P, V> LazyIterable<V> collectWith(Function2<? super T, ? super P, ? extends V> function, P parameter);
-
-    /**
-     * Creates a deferred iterable for selecting and collecting elements from the current iterable.
-     */
-    @Transforming
-    @Override
-    <V> LazyIterable<V> collectIf(Predicate<? super T> predicate, Function<? super T, ? extends V> function);
 
     /**
      * Creates a deferred take iterable for the current iterable using the specified count as the limit.
@@ -178,6 +173,28 @@ public interface LazyIterable<T>
     @Filtering
     LazyIterable<T> distinct();
 
+    //endregion [Category: Filtering] 🚰
+
+    //region [Category: Transforming] 🦋
+
+    /**
+     * Creates a deferred iterable for collecting elements from the current iterable.
+     */
+    @Transforming
+    @Override
+    <V> LazyIterable<V> collect(Function<? super T, ? extends V> function);
+
+    @Transforming
+    @Override
+    <P, V> LazyIterable<V> collectWith(Function2<? super T, ? super P, ? extends V> function, P parameter);
+
+    /**
+     * Creates a deferred iterable for selecting and collecting elements from the current iterable.
+     */
+    @Transforming
+    @Override
+    <V> LazyIterable<V> collectIf(Predicate<? super T> predicate, Function<? super T, ? extends V> function);
+
     /**
      * Creates a deferred flattening iterable for the current iterable.
      */
@@ -196,12 +213,6 @@ public interface LazyIterable<T>
     }
 
     /**
-     * Creates a deferred iterable that will join this iterable with the specified iterable.
-     */
-    @Converting
-    LazyIterable<T> concatenate(Iterable<T> iterable);
-
-    /**
      * Creates a deferred zip iterable.
      */
     @Transforming
@@ -214,27 +225,6 @@ public interface LazyIterable<T>
     @Transforming
     @Override
     LazyIterable<Pair<T, Integer>> zipWithIndex();
-
-    /**
-     * Creates a deferred chunk iterable.
-     */
-    @Grouping
-    @Override
-    LazyIterable<RichIterable<T>> chunk(int size);
-
-    /**
-     * Creates a deferred tap iterable.
-     */
-    @Iterating
-    @Override
-    LazyIterable<T> tap(Procedure<? super T> procedure);
-
-    /**
-     * Iterates over this iterable adding all elements into the target collection.
-     */
-    @Converting
-    @Override
-    <R extends Collection<T>> R into(R target);
 
     /**
      * Returns a lazy BooleanIterable which will transform the underlying iterable data to boolean values based on the booleanFunction.
@@ -291,4 +281,79 @@ public interface LazyIterable<T>
     @Transforming
     @Override
     LazyShortIterable collectShort(ShortFunction<? super T> shortFunction);
+
+    //endregion [Category: Transforming] 🦋
+
+    //region [Category: Grouping] 🏘️
+
+    /**
+     * Creates a deferred chunk iterable.
+     */
+    @Grouping
+    @Override
+    LazyIterable<RichIterable<T>> chunk(int size);
+
+    //endregion [Category: Grouping] 🏘️
+
+    //region [Category: Converting] 🔌
+
+    @Converting
+    @Override
+    default ImmutableList<T> toImmutableList()
+    {
+        MutableList<T> mutableList = Lists.mutable.empty();
+        this.forEach(mutableList::add);
+        return mutableList.toImmutable();
+    }
+
+    @Converting
+    @Override
+    default ImmutableSet<T> toImmutableSet()
+    {
+        MutableSet<T> mutableSet = Sets.mutable.empty();
+        this.forEach(mutableSet::add);
+        return mutableSet.toImmutable();
+    }
+
+    @Converting
+    @Override
+    default ImmutableBag<T> toImmutableBag()
+    {
+        MutableBag<T> mutableBag = Bags.mutable.empty();
+        this.forEach(mutableBag::add);
+        return mutableBag.toImmutable();
+    }
+
+    @Converting
+    @Override
+    default Object[] toArray()
+    {
+        MutableList<T> mutableList = Lists.mutable.empty();
+        this.forEach(mutableList::add);
+        return mutableList.toArray();
+    }
+
+    @Converting
+    @Override
+    default <E> E[] toArray(E[] array)
+    {
+        MutableList<T> mutableList = Lists.mutable.empty();
+        this.forEach(mutableList::add);
+        return mutableList.toArray(array);
+    }
+
+    /**
+     * Creates a deferred iterable that will join this iterable with the specified iterable.
+     */
+    @Converting
+    LazyIterable<T> concatenate(Iterable<T> iterable);
+
+    /**
+     * Iterates over this iterable adding all elements into the target collection.
+     */
+    @Converting
+    @Override
+    <R extends Collection<T>> R into(R target);
+
+    //endregion [Category: Converting] 🔌
 }
